@@ -1,0 +1,24 @@
+<?php echo COM_siteHeader('menu');?>
+
+<div class="page_margins">
+    <div class="page">
+		<div id="main">
+		  <!-- begin: #col1 - first float column -->
+		  <div id="col1">
+			<div id="col1_content" class="clearfix"></div>
+		  </div>
+
+		  <div id="col2">
+			<div id="col2_content" class="clearfix"></div>
+		  </div>
+
+		  <div id="col3">
+			<div id="col3_content" class="clearfix">
+	        <?php echo $this->layout()->content ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php echo COM_siteFooter(true);?>

@@ -1,0 +1,28 @@
+<div align="left">League Points</div>
+
+<table id="admin" class="tablesorter">
+<thead>
+<tr> 
+<th>Name</th>
+</tr> 
+</thead>
+<tbody>
+
+<?php foreach($this->events as $raceDetails) : ?>
+<tr>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'points',
+			'action'=>'points',
+			'id'=>$raceDetails->id));
+echo '">';
+?>
+<?php echo $this->escape($raceDetails->tag);?> <?php echo $this->escape($raceDetails->distance);?> <?php echo $this->escape($raceDetails->unit);?> <?php echo $this->escape($raceDetails->category);?>
+</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>

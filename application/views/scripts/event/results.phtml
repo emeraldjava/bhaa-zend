@@ -1,0 +1,75 @@
+<center>
+<div align="left">
+<?php 
+echo "<b><a href=";
+echo $this->url(
+	array('controller'=>'event',
+		'action'=>'list'));
+echo ">Events</a></b>"
+?> <?php echo sprintf("%s ",$this->event->name);?>
+<b>Location</b> <?php echo sprintf("%s ",$this->event->location);?>
+<b>Date</b> <?php echo sprintf("%s ",date('d/m/Y',strtotime($this->event->date)));?>
+</div>
+<?php 
+echo "<table id=\"races\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Individual Results</th>\n";
+echo "<th>Distance</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->races as $race) : 
+echo "<tr><td><a href=";
+echo $this->url(
+	array('controller'=>'race',
+		'action'=>'results',
+		'race'=>$race->id));
+echo ">".$this->escape($race->category)." Results</a></td>";
+echo "<td>".$this->escape($race->distance).' '.$this->escape($race->unit)."</td>";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+
+<?php 
+if(count($this->teamresults)>0)
+{
+	//echo "Team results";
+?>
+	
+<?php 
+echo "<table id=\"races\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Team Results</th>\n";
+echo "<th>Distance</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->races as $race) : 
+echo "<tr><td><a href=";
+echo $this->url(
+	array('controller'=>'race',
+		'action'=>'teams',
+		'race'=>$race->id));
+echo ">".$this->escape($race->category)." Results</a></td>";
+echo "<td>".$this->escape($race->distance).' '.$this->escape($race->unit)."</td>";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+
+<?php 
+}
+else
+{
+	echo "No Team Results Available.";	
+}
+?>
+
+</center>

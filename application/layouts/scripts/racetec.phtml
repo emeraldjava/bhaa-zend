@@ -1,0 +1,173 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<?php echo $this->headTitle()?>
+	<?php 
+        echo $this->jQuery()
+        ->setLocalPath('/js/jquery/jquery-1.7.1.min.js')
+        ->setUiLocalPath('/js/jquery/jquery-ui-1.8.17.custom.min.js')
+        ->addStylesheet('/css/jquery/cupertino/jquery-ui-1.7.2.custom.css')
+        ->addStylesheet('/css/zendform/zend-form-styled.css')
+		->addStylesheet('/js/jquery-autocomplete/jquery.autocomplete.css')
+        ->addStylesheet('/css/bhaa-yaml.css')
+        ->addStylesheet('/css/racetec.css')
+		->addOnLoad('$("#tabs").tabs();')
+		->addOnLoad('var options = { minChars:4, max:40 };')
+		->addOnLoad('$("#memberfilter").autocomplete(\'./memberfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					$("#runner").val(data[1]);
+					$("#runner").attr("readonly", true);
+					$("#firstname").val(data[2]);
+					$("#firstname").attr("readonly", true);
+					$("#surname").val(data[3]);
+					$("#surname").attr("readonly", true);
+					$("#standard").val(data[4]);
+					$("#standard").attr("readonly", true);
+					$("#dateofbirth").val(data[5]);
+					$("#dateofbirth").attr("readonly", true);
+					/* http://techbrij.com/313/jquery-common-operations-on-radio-button-checkbox */
+					if(data[6]=="M")
+						$("#gender").val("M").attr("selected",true);
+					else
+						$("#gender").val("F").attr("selected",true);
+					$("#gender").attr("readonly", true);
+					
+					$("#companyid").val(data[7]);
+					$("#companyid").attr("readonly", true);
+					$("#companyname").val(data[8]);
+					$("#companyname").attr("readonly", true);
+					$("#teamid").val(data[9]);
+					$("#teamid").attr("readonly", true);
+					$("#teamname").val(data[10]);
+					$("#teamname").attr("readonly", true);
+					$("#agecat").val(data[11]);
+					$("#agecat").attr("readonly", true);
+				
+   					$("#dateofrenewal").val(data[12]);
+			    	if(data[13]=="M")
+					{
+						$("#status").val("M");
+        				$("#type").val("member");
+					}
+        			else
+					{
+						$("#renewaldialog")
+							.html("<div>The runner needs to renew their BHAA membership for 25e or run as a Day Member 15e.</div>")
+							.dialog({
+								title: "BHAA 2012 Membership Renewal",
+								resizable: false,
+								height:440,
+								width:400,
+								modal: true,
+								buttons: {
+									"Renew BHAA Membership  - 25e": function() {
+										$("#status").val("M");
+										$("#type").val("renewal");
+										$( this ).dialog( "close" );
+					
+									},
+									"Day Membership - 15e": function() {
+										$("#status").val("I");
+										$("#type").val("nonrenewal");
+										$("#teamid").val("");
+										$( this ).dialog( "close" );
+	
+									}
+								}
+							});
+					}
+					$("#racenumber").focus();
+				}
+			);')
+        ->addOnLoad('$("#daymemberfilter").autocomplete(\'./daymemberfilter/format/html\',options)'.
+        			'.result(
+        				function(event, data, formatted)
+        				{
+        					$("#runner").val("DAY");
+							$("#runner").attr("readonly", true);
+
+        		
+        					$("#standard").val("");
+        					$("#firstname").val(data[2]);
+        					$("#surname").val(data[3]);
+        					$("#dateofbirth").val(data[5]);
+        					/* http://techbrij.com/313/jquery-common-operations-on-radio-button-checkbox */
+        					if(data[6]=="M")
+								$("#gender").val("M").attr("selected",true);
+							else
+								$("#gender").val("F").attr("selected",true);
+        					$("#companyname").val(data[7]);
+        		        	$("#standard").attr("readonly", true);
+        		        	$("#standard").val("");
+							$("#type").val("day");
+        					$("#status").val("D");
+        					$("#racenumber").focus();
+        				}
+        			);')
+		->addOnLoad('$("#admin").tablesorter({sortList: [[2,1]]});')
+		->addOnLoad('$("#companyquery").autocomplete(\'/company/companyname/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./index/id/"+data[1];
+				}
+			);');
+	?>
+	<?php echo $this->headScript()
+		->appendFile(
+		    	'/css/zendform/zend-form-styled.js',
+	    		'text/javascript'
+		)
+		->appendFile(
+				'/js/tablesorter/jquery.tablesorter.min.js',
+				'text/javascript'
+		)
+		->appendFile(
+	    	'/js/jquery-autocomplete/jquery.autocomplete.min.js',
+    		'text/javascript'
+    	);
+    ?>
+    <?php echo $this->headLink(array('rel' => 'icon', 'href' => '/images/favicon.ico', 'type' => 'image/x-icon')); ?>
+</head> 
+<body style="background:#005DB3;">
+<div class="page_margins">
+    <div class="page">
+    	<div id="nav">
+		  <div class="hlist">
+			<?php echo $this->navigation()->menu()->setUlClass('jd_menu')->setRole(); ?>
+			</div>
+		</div>
+	</div>
+	
+    <div id="main">
+      <!-- begin: #col1 - first float column -->
+      <div id="col1">
+        <div id="col1_content" class="clearfix"></div>
+      </div>
+      
+      <div id="col2">
+        <div id="col2_content" class="clearfix"></div>
+      </div>
+           
+       <div id="col3">
+        <div id="col3_content" class="clearfix"><?php echo $this->layout()->content ?></div>
+      </div>
+    </div>
+
+    <!-- begin: #footer -->
+    <div id="footer">
+    <?php if(Zend_Auth::getInstance()->getIdentity()) : ?>
+        <div id="logged-in">Welcome <?php echo $this->escape(Zend_Auth::getInstance()->getIdentity()->name);?>.
+                <a href="<?php echo $this->baseUrl ?>/auth/logout">Logout</a>
+               <?php endif; ?>
+    		<a href="http://bhaa.ie"> BHAA 1979-2012</a> If you have questions about this site please contact us by email at <a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a>
+    	</div>
+	</div>
+    <!-- end: #footer -->
+    
+</div>
+</body>
+</html>

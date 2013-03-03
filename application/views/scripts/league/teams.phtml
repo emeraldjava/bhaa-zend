@@ -1,0 +1,46 @@
+<div align="left">
+<?php
+echo "Back to : <a href=";
+echo $this->url(array('controller'=>'league','action'=>'list'));
+echo ">Leagues</a>";
+?>
+</div>
+
+<center>
+<h3><?php echo $this->league->name;?></h3>
+<table id="division" class="tablesorter">
+<thead>
+<tr>
+<th>Division</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<?php
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'league',
+			'action'=>'team',
+			'gender'=>'M'
+		));
+echo ">Men's Team League</a></td>";
+?>
+</tr>
+
+<tr>
+<?php
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'league',
+			'action'=>'team',
+			'gender'=>'W'
+		));
+echo ">Women's Team League</a></td>";
+?>
+</tr>
+
+</tbody>
+</table>
+
+</center>

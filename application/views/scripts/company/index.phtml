@@ -1,0 +1,61 @@
+<center>
+
+<?php
+if($this->company->image != null)
+echo sprintf("<img src='%s'/>",$this->company->image);
+?>
+
+<div align="left">Company
+<?php
+if($this->company->website != null)
+echo sprintf(" Website : <a target='_new' href='%s'>%s</a>",$this->escape($this->company->website),$this->company->name);
+else
+echo sprintf("%s",$this->company->name);
+?>
+</div>
+<div align="left">
+<?php
+echo "Sector <a href=";
+echo $this->url(
+		array('controller'=>'sector',
+			'action'=>'index',
+			'id'=>$this->sector->id
+		));
+echo ">".$this->sector->name."</a>";
+?>
+
+</div>
+
+<?php 
+echo "<table id=\"runners\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Name</th>\n";
+echo "<th>Gender</th>\n";
+echo "<th>Standard</th>\n";
+echo "<th>Races Ran</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->runners as $runner) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$runner->id
+		));
+echo ">".$this->escape($runner->firstname) . ' '. $this->escape($runner->surname)."</a></td>";
+?>
+<td><?php echo $this->escape($runner->gender);?></td>
+<td><?php echo $this->escape($runner->standard);?></td>
+<td><?php echo $this->escape($runner->races);?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

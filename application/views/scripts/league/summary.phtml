@@ -1,0 +1,37 @@
+<div align="right">
+    <table id="years">
+    <tr id="year-row">
+    <?php
+    foreach($this->years as $year) :
+        echo '<td><a href="';
+        echo $this->url(array(
+            'controller'=>'league',
+            'action'=>'summary',
+            'year'=>$year->year));
+        echo '">'.$year->year.'</a></td>';
+    endforeach;
+    ?>
+    </tr>
+    </table>
+</div>
+
+<div id="tabs">
+	<ul>
+        <?php
+        foreach($this->leagues as $league) :
+            echo '<li><a href="#league'.$league->id.'">'.$league->name.'</a></li>';
+        endforeach;
+        ?>
+	</ul>
+
+    <?php
+    foreach($this->leagues as $league) :
+        if($league->type=="I")
+            echo $this->individualDivisionHelper(
+                $this->divisions,$this->individualleaguesummary,$league->id);
+        else
+            echo $this->teamDivisionHelper(
+                $this->divisions,$this->teamleaguesummary,$league->id);
+    endforeach;
+    ?>
+</div>

@@ -1,0 +1,7 @@
+<?php $this->placeholder('title')->set('My First Facebook App!'); ?>
+echo "<p>Hello, <fb:name uid="<?php echo $this->$user_id ?>" useyou=\"false\" />!</p>";
+Hello <fb:profile-pic uid='<?php echo $this->$user_id ?>' linked="true"/>!<br /> <br />
+Something to say?
+<fb:comments xid="myCommentsBox" canpost="true" candelete="false" returnurl="http://apps.facebook.com/bhaa_app">
+  <fb:title>My first comment Box</fb:title>
+</fb:comments>

@@ -1,0 +1,125 @@
+<center>
+<div align="left">Sector <?php echo $this->sector->name;?></div>
+
+Companies with active BHAA members.
+<?php
+echo "<table id=\"runners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Company</th>\n";
+echo "<th>Number of runners</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->companies as $company) :
+
+if($company->runners>=1)
+{
+	echo "<tr>\n";
+	echo "<td><a href=";
+	echo $this->url(
+			array('controller'=>'company',
+				'action'=>'listrunners',
+				'company'=>$company->id
+			));
+	echo ">".$this->escape($company->name)."</a></td>";
+	echo "<td>".$this->escape($company->runners)."</td>";
+	echo "</tr>\n";
+}
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+Runners available for sector team.
+<?php
+echo "<table id=\"runners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Runner</th>\n";
+echo "<th>Races in 2010</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->runners as $runner) :
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+        array('controller'=>'runner',
+            'action'=>'index',
+            'id'=>$runner->id
+        ));
+echo ">".$this->escape($runner->firstname)." ".$this->escape($runner->surname)."</td>";
+echo "<td>".$this->escape($runner->races)."</td>";
+echo "</tr>\n";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+Sector Teams.
+<?php
+echo "<table id=\"runners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Team</th>\n";
+echo "<th>Type</th>\n";
+echo "<th>Total Members</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->teams as $company) :
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+        array('controller'=>'team',
+            'action'=>'index',
+            'id'=>$company->id
+        ));
+echo ">".$this->escape($company->name)."</a></td>";
+echo "<td>".$this->escape($company->type)."</td>";
+echo "<td>".$this->escape($company->members)."</td>";
+echo "</tr>\n";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+Companies without active BHAA members.
+<?php
+echo "<table id=\"runners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Company</th>\n";
+echo "<th>Company</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php
+$i=0;
+foreach($this->companies as $company) :
+
+if($company->runners==0)
+{
+	if($i++ % 2 === 0)
+	{
+		echo "<tr>\n";
+		echo "<td>".$this->escape($company->name)."</td>";
+		echo "<!-- ".$this->escape($company->id)."-->";
+	}
+	else
+	{
+		echo "<td>".$this->escape($company->name)."</td>";
+		echo "<!-- ".$this->escape($company->id)."-->";
+		echo "</tr>\n";
+	}
+}
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

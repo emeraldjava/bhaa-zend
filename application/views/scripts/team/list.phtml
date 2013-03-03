@@ -1,0 +1,44 @@
+<center>
+
+<div align="left">
+BHAA Team For the 2010 Season:
+</div>
+
+<div align="right">
+Search Team : <input size="30" type="text" name="teamquery" id="teamquery"/>
+</div>
+
+<div align="left">
+
+<table class="tablesorter">
+<thead>
+<tr> 
+<th>Name</th>
+<th>Type</th>
+<th>Number of Runners</th>
+<th>Contact</th>
+</tr> 
+</thead>
+<tbody>
+
+<?php foreach($this->teams as $team) : ?>
+<tr>
+<td>
+<?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'team',
+			'action'=>'index',
+			'id'=>$team->id
+		));
+echo ">".$team->name."</a>";
+?>
+</td>
+<td><?php echo sprintf("%s",$team->type);?></td>
+<td><?php echo sprintf("%s",$team->runners);?></td>
+<td><?php echo sprintf("%s %s",$team->firstname,$team->surname);?></td>
+</tr>
+<?php endforeach; ?>
+</table>
+</div>
+</center>

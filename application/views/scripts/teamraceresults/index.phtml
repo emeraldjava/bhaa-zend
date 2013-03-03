@@ -1,0 +1,96 @@
+<center>
+
+<div id="teamresults">
+<br/>
+Women
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'clearteams',
+            'race'=> $this->currentevent->womensrace,
+            'class'=>'W'));
+echo sprintf(">CLEAR ALL %s Womens TEAM RESULTS</a></strong>",$this->currentevent->name);
+?>
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'firstphase',
+            'league'=>$this->teamleague->id,
+            'race'=>$this->currentevent->womensrace,
+            'gender'=>'W'));
+echo sprintf(">Firstphase %s Womens Teams</a></strong>",$this->currentevent->name);
+?>
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'finalphase',
+            'league'=>$this->teamleague->id,
+            'race'=>$this->currentevent->womensrace,
+            'gender'=>'W'));
+echo sprintf(">Finalphase %s Womens Teams</a></strong>",$this->currentevent->name);
+?>
+<br/>
+MEN
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'clearteams',
+            'race'=> $this->currentevent->mensrace));
+echo sprintf(">CLEAR ALL %s Mens TEAM RESULTS</a></strong>",$this->currentevent->name);
+?>
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'firstphase',
+            'league'=>$this->teamleague->id,
+            'race'=>$this->currentevent->mensrace,
+            'gender'=>'M'));
+echo sprintf(">Firstphase %s Mens Teams</a></strong>",$this->currentevent->name);
+?>
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'finalphase',
+            'league'=>$this->teamleague->id,
+            'race'=>$this->currentevent->mensrace,
+            'gender'=>'M'));
+echo sprintf(">Finalphase %s Mens Teams</a></strong>",$this->currentevent->name);
+?>
+<br/>
+ACTIVATE
+<br/>
+<?php
+echo "<strong><a target='new' href=";
+echo $this->url(
+	array('controller'=>'teamraceresults',
+            'action'=>'updatestatus',
+            'tag'=>$this->currentevent->tag));
+echo sprintf(">Set %s status=ACTIVE</a></strong>",$this->currentevent->name);
+?>
+</div>
+
+<div id="cache" align="left">
+<p><?php
+echo "<a href=";
+echo $this->url(array('controller'=>'admin','action'=>'clearcache'));
+echo ">Clear cached SQL result data</a>"
+?> - Hit the url link to delete all cache sql queries.</p>
+</div>
+
+<div id="grid">
+<?php echo $this->grid; ?>
+</div>
+
+</center>

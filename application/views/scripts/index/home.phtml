@@ -1,0 +1,72 @@
+
+<head>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/js/jquery-autocomplete/jquery.autocomplete.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+</head>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+    $("#tabs").tabs();
+    var options = { minChars:3, max:20 };
+    $("#runnerquery").autocomplete('/members/app/index/runnerfilter/format/html',options).result(
+        function(event, data, formatted)
+        {
+            window.location = "/members/app/runner/index/id/"+data[1];
+        }
+    );
+});
+//]]>
+</script>
+<script type="text/javascript" src="/public/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
+<body>
+<center>
+<div id="tabs">
+	<ul>
+        <li><a href="#currentEvent">Last Event</a></li><!-- <php echo $this->event->name;> -->
+		<?php foreach($this->events as $event) : ?>
+	    <li><a href="#nextEvent">Next Event</a></li>
+	    <?php endforeach; ?>
+        <li><a href="#findRunner">Find Runner</a></li>
+	</ul>
+    <div align="left"id="currentEvent">
+        <p>
+    	Full Details:<?php
+    	echo "<a href=";
+		echo $this->url(
+				array('controller'=>'event',
+					'action'=>'index',
+					'tag'=>$this->event->tag));
+		echo ">".$this->event->name."</a>"
+		?><br/>
+	    </p>
+        <!--
+        <td><php echo $this->escape($this->event->location);?></td>
+        <td><php echo $this->escape($this->event->type);?></td>
+        <td><php echo date('D dS M',strtotime($this->event->date));?></td>
+        -->
+    </div>
+	<?php foreach($this->events as $event) : ?>
+    <div align="left" id="nextEvent">
+    	<p>
+    	Full Details:<?php
+    	echo "<a href=";
+		echo $this->url(
+				array('controller'=>'event',
+					'action'=>'index',
+					'tag'=>$event->tag));
+		echo ">$event->name</a>"
+		?><br/>
+	    </p>
+	</div>
+    <?php endforeach;?>
+
+    <div id="findRunner">
+        <div align="left">
+        Search Runner : <input size="30" type="text" name="runnerquery" id="runnerquery"/>
+        </div>
+    </div>
+</div>
+</center>
+</body>

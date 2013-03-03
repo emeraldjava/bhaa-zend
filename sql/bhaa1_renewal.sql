@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `renewal`;
+CREATE TABLE IF NOT EXISTS `renewal` (
+    code VARCHAR(200) NOT NULL,
+    runner VARCHAR(4) NOT NULL,
+    email VARCHAR(40) NOT NULL,
+    status ENUM("I","C") DEFAULT "I",
+    PRIMARY KEY (code)
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -1,0 +1,148 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<?php echo $this->headTitle();?>
+	<?php echo $this->headLink();?>
+	
+	<?php echo $this->jQuery()
+	->setLocalPath('/js/jquery-1.6.2.min.js')
+	->setUiLocalPath('/js/jquery-ui-1.8.17.custom.min.js')
+	
+	->addOnLoad('var options = { source:\'./memberfilter/format/html\'};')
+	->addOnLoad('$("#memberfilter").typeahead(\'./memberfilter/format/html\',options)'.
+				'.result(
+					function(event, data, formatted)
+					{
+						$("#runner").val(data[1]);
+						$("#runner").attr("readonly", true);
+						$("#firstname").val(data[2]);
+						$("#firstname").attr("readonly", true);
+						$("#surname").val(data[3]);
+						$("#surname").attr("readonly", true);
+						$("#standard").val(data[4]);
+						$("#standard").attr("readonly", true);
+						$("#dateofbirth").val(data[5]);
+						$("#dateofbirth").attr("readonly", true);
+						/* http://techbrij.com/313/jquery-common-operations-on-radio-button-checkbox */
+						if(data[6]=="M")
+							$("input:radio[name=gender]:nth(0)").attr("checked",true);
+						else
+							$("input:radio[name=gender]:nth(1)").attr("checked",true);
+						$("#gender").attr("readonly", true);
+						$("#companyid").val(data[7]);
+						$("#companyid").attr("readonly", true);
+						$("#companyname").val(data[8]);
+						$("#companyname").attr("readonly", true);
+						$("#teamid").val(data[9]);
+						$("#teamid").attr("readonly", true);
+						$("#teamname").val(data[10]);
+						$("#teamname").attr("readonly", true);
+						$("#agecat").val(data[11]);
+						$("#agecat").attr("readonly", true);
+						$("#racenumber").focus();
+					}
+				);')
+	->addOnLoad('$("#daymemberfilter").autocomplete(\'./daymemberfilter/format/html\',options)'.
+	        			'.result(
+	        				function(event, data, formatted)
+	        				{
+	        					$("#runner").val("DAY");
+								$("#runner").attr("readonly", true);
+	        					$("#standard").val("");
+	        					$("#firstname").val(data[2]);
+	        					$("#surname").val(data[3]);
+	        					$("#dateofbirth").val(data[5]);
+	        					$("#standard").attr("readonly", true);
+	        					/* http://techbrij.com/313/jquery-common-operations-on-radio-button-checkbox */
+								if(data[6]=="M")
+									$("input:radio[name=gender]:nth(0)").attr("checked",true);
+								else
+									$("input:radio[name=gender]:nth(1)").attr("checked",true);
+								$("#racenumber").focus();
+	        				}
+	        			);');?>
+	<?php echo $this->headScript();?>
+</head> 
+<body>
+<div class="page_margins">
+
+    
+
+        	<div id="main" class="container">
+    
+        <div id="header">
+	        <div id="topnav" align="right">
+                <?php if(Zend_Auth::getInstance()->getIdentity()) : ?>
+                <p id="logged-in">Welcome <?php echo $this->escape(Zend_Auth::getInstance()->getIdentity()->name);?>.
+                <a href="<?php echo $this->baseUrl ?>/auth/logout">Logout</a></p>
+                <?php endif; ?>
+            </div>
+            <!--<div>
+                <a href="."><img src="/images/bhaa_form_logo.png" alt="BHAA" width="80" height="80"/></a>
+            </div>-->
+        </div>
+        
+        
+    	<div class="navbar">
+			  <div class="navbar-inner navbar-fixed-top">
+			    <div class="container-fluid">
+				    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+				    </a>
+				    <a class="brand" href="#">BHAA</a>
+				    <div class="nav-collapse">
+					<?php echo $this->navigation()->menu()->setUlClass('nav nav-tabs')->setRole(); ?>
+					<p class="navbar-text pull-right">Logged in as <a href="#"><?php echo $this->escape(Zend_Auth::getInstance()->getIdentity()->name);?></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+<div class="navbar-search pull-left" align="left">
+<input size="10" type="text" class="search-query" placeholder="BHAA ID" id="memberfilter" name="memberfilter"/>
+</div>
+<div class="navbar-search pull-left" align="left">
+<input size="40" type="text" class="search-query" placeholder="Firstname and/or Surname" id="memberfilter" name="memberfilter"/>
+</div>
+    
+          <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+<?php echo $this->layout()->content ?> 
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>Heading</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Heading</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+    
+    </div>
+
+    <!-- begin: #footer -->
+    <div id="footer">
+    	<a href="http://bhaa.ie"> BHAA 1979-2012</a> If you have questions about this site please contact us by email at <a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a>
+	</div>
+    <!-- end: #footer -->
+    
+  </div>
+</div>
+</body>
+</html>

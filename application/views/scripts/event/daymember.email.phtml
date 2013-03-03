@@ -1,0 +1,129 @@
+<div class="main">
+
+	<!-- image -->
+	<!--<div class="subcolumns">
+	    <div class="c70l">
+		    <div class="center">
+		    	<img src="http://bhaa.ie/images/logof4698703.png" width="700" height="100"/>
+		    </div>
+	    </div>
+	</div>-->
+
+    <!--  top row -->
+	<div class="subcolumns">
+        <div class="c70l">
+            <div class="center"><h3>BHAA '<?php echo $this->event->name ?>' Day Member Registration Form</h3></div>
+            <div class="center"><p>Location: <?php echo $this->event->location?>. Date: <?php echo $this->event->date?></p></div>
+        </div>
+    </div>
+    
+	<!-- signed -->
+	<div class="subcolumns" style="background: white">
+  		<div class="c70l">
+<p>Thank you <?php echo $this->escape($this->firstname);?> for using the online pre-registration process. <b>Please print this email and bring the
+signed sheet to the race</b> or else you'll be requested to fill in a form on the day.</p>
+<p>See the event webpage <a href="http://bhaa.ie/event/<?php echo $this->event->tag;?>">http://bhaa.ie/event/<?php echo $this->event->tag;?></a> for more details.</p>
+<p>Yours in sport,</p>
+<p>BHAA Committee.</p>
+   		</div>
+	</div>
+
+	<table class="full">
+ 	<tbody>
+    	<tr>
+        	<th width="100px">Firstname</th>
+            <td><?php echo $this->escape($this->firstname);?></td>
+		</tr>
+		<tr>
+			<th width="100px">Surname</th>
+			<td><?php echo $this->escape($this->surname);?></td>
+		</tr>
+		<tr>
+			<th width="100px"">Gender</th>
+			<td><?php echo $this->escape($this->gender);?></td>
+		</tr>
+		<tr>
+			<th width="100px">Date of Birth</th>
+			<td><?php echo $this->escape($this->dateofbirth);?></td>
+    	</tr>
+		<!-- address -->
+		<tr>
+			<th width="100px">Address</th>
+			<td><?php echo $this->escape($this->address1);?></td>
+		</tr>
+		<tr>
+			<th width="100px"></th>
+			<td><?php echo $this->escape($this->address2);?></td>
+		</tr>
+		<tr>
+			<th width="100px"></th>
+			<td><?php echo $this->escape($this->address3);?></td>
+		</tr>
+
+		<tr>
+			<th width="100px">Email</th>
+			<td><?php echo $this->escape($this->email);?></td>
+		</tr>
+
+		<tr>
+			<th width="100px">Newsletter</th>
+			<td><?php echo $this->escape($this->newsletter);?></td>
+		</tr>
+
+		<tr>
+			<th width="100px">Telephone</th>
+			<td><?php echo $this->escape($this->mobile);?></td>
+		</tr>
+
+		<tr>
+			<th width="100px">Text Alert</th>
+			<td><?php echo $this->escape($this->textmessage);?></td>
+		</tr>
+		<tr>
+			<th width="100px">Company</th>
+			<td><?php echo $this->escape($this->companyname);?></td>
+		</tr>
+		</tbody>
+	</table>
+
+		<!-- declaration -->
+	<div class="subcolumns" style="background: white">
+  		<div class="c70l">
+			<div class="float_left">
+    			<p><b>Declaration:</b>I understand that I enter the Business Houses Athletic Association (BHAA) events at my own risk and that neither BHAA Race Promoters, Sponsors or Associate Sponsors, volunteers and all other persons involved directly or indirectly in the organization and management of the Event will be held responsible for any accident suffered or injury sustained by myself from any cause whatsoever, or for any property lost, damaged, mislaid, stolen or damaged, on the course, from my person, from my property or at the changing areas or at any place. Furthermore, I hereby grant full permission to any of the foregoing to use photographs, films or recordings of the event for any legitimate purpose without payment of any royalty or fees to me. I agree to abide by all lawful instructions issued to me the orgnaisers, the stewards or by An Garda Siochana in the changing area or on the Course on the day.
+            </div>
+   		</div>
+	</div>
+
+	<!-- min age -->
+	<div class="subcolumns" style="background: white">
+  		<div class="c70l">
+			<div class="float_left">
+    			<p>Entrants must be at least 18 years of age on race day. Payment of 15euro is taken on the day of the event at the registration area.</p>
+    		</div>
+   		</div>
+	</div>
+
+	<!-- signed -->
+	<div class="subcolumns" style="background: white">
+  		<div class="c70l">
+			<div class="float_left">
+    			<p>Signed	_____________________________	    Date  ______________________</p>
+    		</div>
+   		</div>
+	</div>
+
+    <div align="right">
+    Official use only [<?php echo $this->preregid; ?>]:
+    <table border="1" cellpadding="1">
+        <tr>
+            <td width="200px">Race Number</td>
+            <td width="200px">Race Fee</td>
+        </tr>
+        <tr>
+            <td width="200px" height="50px"></td>
+            <td width="200px" height="50px"></td>
+        </tr>
+    </table>
+    </div>
+</div>

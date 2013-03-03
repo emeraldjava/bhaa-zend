@@ -1,0 +1,30 @@
+<center>
+<?php 
+echo "<table id=\"races\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>ID</th>\n";
+echo "<th>Name</th>\n";
+echo "<th>Distance</th>\n";
+echo "<th>Unit</th>\n";
+echo "<th>Category</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->races as $race) : ?>
+
+<?php 
+echo "<tr>\n";
+?>
+<td><?php echo $this->escape($race->id);?></td>
+<td><?php echo $this->escape($race->event);?></td>
+<td><?php echo $this->escape($race->distance);?></td>
+<td><?php echo $this->escape($race->unit);?></td>
+<td><?php echo $this->escape($race->category);?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

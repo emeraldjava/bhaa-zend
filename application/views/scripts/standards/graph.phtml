@@ -1,0 +1,109 @@
+<div id="pacecontainer" style="width: 800px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart1 = new Highcharts.Chart({
+     chart: {
+        renderTo: 'pacecontainer',
+        defaultSeriesType: 'scatter',
+        zoomType: 'xy'
+     },
+     title: {
+        text: 'Standards and Runner Pace per KM'
+     },
+     xAxis: {
+        type: 'datetime',
+        title: {
+           text: 'Time'
+        },
+        min: '180000'
+     },
+     yAxis: {
+        title: {
+           text: 'Standard'
+        },
+        min: 1,
+        max: 30
+     },
+     tooltip: {
+        enabled: true,
+        formatter: function() {
+            return '<strong>'+ this.series.name +': </strong> Standard '+this.y +', Time '+
+                Highcharts.dateFormat('%M. %S', this.x);
+        }
+     },
+     series: [
+     {
+        name: 'Expected',
+        type: 'line',
+        data: <?php echo $this->highChartTimeDataSeries($this->standardtimes,'p_expected','standard');?>
+     },
+     {
+        name: 'Min',
+        data: <?php echo $this->highChartTimeDataSeries($this->standardtimes,'p_min','standard');?>
+     },
+     {
+        name: 'Average',
+        data: <?php echo $this->highChartTimeDataSeries($this->standardtimes,'p_average','standard');?>
+     },
+     {
+        name: 'Max',
+        data: <?php echo $this->highChartTimeDataSeries($this->standardtimes,'p_max','standard');?>
+     },
+     {
+        name: 'Pace Per KM',
+        data: <?php echo $this->highChartTimeDataSeries($this->raceresults,'paceKM','standard');?>
+     },
+     {
+        name: 'Post Standard',
+        data: <?php echo $this->highChartTimeDataSeries($this->raceresults,'paceKM','postracestandard');?>
+     },
+     ]
+  });
+});
+</script>
+
+<div id="container3" style="width: 800px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart1 = new Highcharts.Chart({
+     chart: {
+        renderTo: 'container3',
+        defaultSeriesType: 'line',
+        zoomType: 'xy'
+     },
+     title: {
+        text: 'Standard Distribution'
+     },
+     xAxis: {
+        title: {
+           text: 'Position'
+        }
+     },
+     yAxis: {
+        type: 'datetime',
+        title: {
+           text: 'Time' 
+        },
+        min: '180000'
+     },
+     tooltip: {
+        enabled: true,
+        formatter: function() {
+            return '<strong>'+ this.series.name +': </strong> Position '+this.x +', Time '+
+                Highcharts.dateFormat('%M. %S', this.y);
+        }
+     },
+     series: [
+     {
+        name: 'Pace and postion',
+        data: <?php echo $this->highChartSimpleDataSeries($this->raceresults,'paceKM');?>
+     },
+     {
+        name: 'NormalisedPaceKm',
+        data: <?php echo $this->highChartSimpleDataSeries($this->raceresults,'normalisedPaceKm');?>
+     },
+
+     ]
+  });
+});
+</script>

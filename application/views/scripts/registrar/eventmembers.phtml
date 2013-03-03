@@ -1,0 +1,83 @@
+Process race results for event <?php echo $this->event->name ?>.
+<hr/>
+
+<?php
+echo $this->dayMemberHelper();
+?>
+
+<hr/>
+List of results that match existing members.
+<?php
+echo "<table id=\"linkedrunners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Position</th>\n";
+echo "<th>Day ID</th>\n";
+echo "<th>Runner</th>\n";
+echo "<th>Link Runner</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->unlinked as $event) : ?>
+<tr>
+<td><?php echo $this->escape($event['position']);?></td>
+<td><?php 
+echo '<a target="_blank" href="';
+echo $this->url(
+		array(
+            'controller'=>'runner',
+			'action'=>'index',
+			'id'=>$event['dayid']
+		));
+echo '">'.$this->escape($event['dayid']).'</a>'
+?>
+</td>
+<td><?php 
+echo '<a target="_blank" href="';
+echo $this->url(
+		array(
+            'controller'=>'runner',
+			'action'=>'index',
+			'id'=>$event['memberid']
+		));
+echo '">'.$this->escape($event['firstname']) ." ".$event['surname']." ".$event['dateofbirth']." ".$event->status." ".$event->memberid .'</a>'
+?></td>
+<td><?php
+echo '<a href="';
+echo $this->url(
+		array(
+            'controller'=>'registrar',
+			'action'=>'linkrunner',
+			'dayid'=>$event['dayid'],
+   			'memberid'=>$event['memberid'],
+            'race'=>$event->raceid,
+            'tag'=>$this->event->tag
+		));
+echo '">'.$this->escape($event['dayid']).'-->'. $this->escape($event['memberid']).'</a>'
+?>
+</td>
+<?php
+echo "</tr>";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+<div align="left">
+To search for a runner by racenumber add 'racenumber/xxxx' to the url above.
+</div>
+<?php 
+if(isset($this->raceNumberDetails))
+{
+echo "Match found for race number ".$this->raceNumberDetails->racenumber.". :: <a target='new' href=";
+echo $this->url(
+		array('controller'=>'runner','action'=>'index',
+            'id'=>$this->raceNumberDetails->runner));
+echo ">Edit Day Runner : ".$this->raceNumberDetails->runner."</a>";
+}
+else
+{
+    echo "No Match";
+}
+?>

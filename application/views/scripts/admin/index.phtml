@@ -1,0 +1,292 @@
+<center>
+
+<div align="left">
+<?php
+echo 'UPDATE > Individual League : <a href="';
+echo $this->url(
+		array('controller'=>'admin',
+			'action'=>'updateindividualleaguesummary',
+            'league'=>$this->individualleague->id
+		));
+echo '">'.$this->individualleague->name.'</a>';
+?>
+<?php
+echo '> Team League : <a href="';
+echo $this->url(
+		array('controller'=>'admin',
+			'action'=>'updateteamleaguesummary',
+            'league'=>$this->teamleague->id
+		));
+echo '">'.$this->teamleague->name.'</a>';
+?>
+</div>
+<hr/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin',
+			'action'=>'updateteams'
+		));
+echo '">Migrate Team Members</a>';
+?>
+<hr/>
+<?php
+echo '<a href="';
+echo $this->url(array('controller'=>'admin','action'=>'switchformstatus'));
+echo '">Membership Form Status : '.$this->formStatus->value.'</a>';
+?>
+<hr/>
+<div id="cache" align="left">
+<p><?php
+echo '<a href="';
+echo $this->url(array('controller'=>'admin','action'=>'clearcache'));
+echo '">Clear cached SQL result data.</a>';
+?>
+</p>
+</div>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#results">Events</a></li>
+        <li><a href="#tabstandard">Standards</a></li>
+        <li><a href="#tabexport">File Export</a></li>
+        <li><a href="#teamresults">Team Results</a></li>
+        <li><a href="#registrar">Registrar</a></li>
+        <li><a href="#textalerts">Text Alerts</a></li>
+        <li><a href="#flickr">Flickr</a></li>
+        <li><a href="#staggered">Staggered</a></li>
+        <li><a href="#points">Points</a></li>
+        <li><a href="#cache">Cache</a></li>
+    </ul>
+<div id="results">
+
+<table id="admin" class="tablesorter">
+<thead>
+<tr> 
+<th>Name</th>
+<th>Total</th>
+<th>Date</th>
+<th>Files</th>
+<th>Reload Event</th>
+<th>Update Race</th>
+<th>Delete Race</th>
+<th>League</th>
+<th>ClearEvent</th>
+<th>Flickr</th>
+</tr> 
+</thead>
+<tbody>
+
+<?php foreach($this->events as $raceDetails) : ?>
+
+<tr>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'event',
+			'action'=>'index',
+			'tag'=>$raceDetails->tag));
+echo '">';
+?>
+<?php echo $this->escape($raceDetails->tag);?> <?php echo $this->escape($raceDetails->distance);?> <?php echo $this->escape($raceDetails->unit);?> <?php echo $this->escape($raceDetails->category);?>
+</a></td>
+<td><?php echo $this->escape($raceDetails->number);?></td>
+<td><?php echo $this->escape($raceDetails->date);?></td>
+<td><?php echo $this->escape($raceDetails->file);?></td>
+<?php
+echo '<td><a href="';
+echo $this->url(
+		array('controller'=>'admin',
+			'action'=>'reloadevent',
+			'event'=>$raceDetails->event));
+echo '">Reload Event</a></td>';
+?>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'admin',
+		'action'=>'updateraceresult',
+		'race'=>$raceDetails->id));
+echo '">Update Race</a>';
+?>
+</td>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'admin',
+		'action'=>'deleteraceresults',
+		'race'=>$raceDetails->id));
+echo '">Delete Race</a>';
+?>
+</td>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'admin',
+		'action'=>'updateresultsbyevent',
+		'event'=>$raceDetails->event));
+echo '">League</a>';
+?>
+</td>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+    array('controller'=>'admin',
+        'action'=>'cleareventresultsdata',
+        'event'=>$raceDetails->event));
+echo '">Clear</a>';
+?>
+</td>
+<td>
+<?php
+echo '<a target="_blank" href="';
+echo $this->url(
+    array('controller'=>'flickr',
+        'action'=>'eventphotos',
+        'tag'=>$raceDetails->tag));
+echo '">'.$raceDetails->tag.'</a>';
+?>
+</td>
+</tr>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</div>
+
+<div id="tabstandard">
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'admin'
+		));
+echo '">Race Standards</a>';
+?>
+<hr/>
+
+    Runners with standard 0 or NULL.
+    <?php echo $this->displayGenericTableHelper($this->missingStandards); ?>
+    <br/>
+    
+</div>
+
+<div id="tabexport">
+
+<div align="left">
+Export <b><?php echo $this->nextevent->name ?></b> Files<br/>
+<hr/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin','action'=>'export'));
+echo '">Export Current Active Members</a>';
+?>
+<br/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin','action'=>'export','letterStart'=>'A','letterEnd'=>'L'));
+echo '">Export A-L Members</a>';
+?>
+<br/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin','action'=>'export','letterStart'=>'M','letterEnd'=>'Z'));
+echo '">Export M-Z Members</a>';
+?>
+<br/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin','action'=>'export','letterStart'=>'A','letterEnd'=>'Z','status'=>'I','date'=>'2010-01-01'));
+echo '">Export Inactive Members</a>';
+?>
+<br/>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'admin','action'=>'exportrunirelandrunners','tag'=>$this->nextevent->tag));
+echo '">Export Runireland Daymembers</a>';
+?>
+</div>
+</div>
+
+<div id="teamresults">
+<?php
+echo '<strong><a target="new" href="';
+echo $this->url(array('controller'=>'teamraceresults','action'=>'index'));
+echo '">Team Results</a></strong>';
+?>
+</div>
+
+<div id="registrar" align="left">
+<p><?php
+echo '<strong><a target="new" href="';
+echo $this->url(array('controller'=>'registrar','action'=>'index'));
+echo '">Registrar</a></strong>';
+?></p>
+</div>
+
+<div id="textalerts" align="left">
+<p><?php
+echo '<strong><a target="new" href="';
+echo $this->url(array('controller'=>'textalert','action'=>'index'));
+echo '">Text Alerts</a></strong>';
+?></p>
+</div>
+
+<div id="flickr" align="left">
+<p><?php
+echo '<strong><a target="new" href="';
+echo $this->url(array('controller'=>'flickr','action'=>'index'));
+echo '">Flickr Admin</a></strong>';
+?></p>
+</div>
+
+<div id="staggered" align="left">
+<p><?php
+echo '<strong><a target="new" href="';
+echo $this->url(
+    array('controller'=>'admin','action'=>'staggered','event'=>$this->currentevent->id));
+echo '">Process '.$this->currentevent->tag.' staggered race times.</a></strong>';
+?></p>
+</div>
+
+<div id="points" align="left">
+<p><?php
+echo '<strong><a target="new" href="';
+echo $this->url(array('controller'=>'points','action'=>'index'));
+echo '">Points</a></strong>';
+?></p>
+</div>
+
+<div id="cache" align="left">
+<p><?php
+echo '<div>Tags '.count($this->cachetags).'</div>';
+echo '<div>Ids '.count($this->cacheids).'</div>';
+echo "<div>";
+foreach($this->cachetags as $tag)
+{
+	echo '<a href="';
+	echo $this->url(
+	array('controller'=>'admin',
+				'action'=>'cleartag',
+				'tag'=>$tag));
+	echo '">'.$tag.'</a> - ';	
+}
+echo "</div>";
+//Zend_Debug::dump($this->cachetags);
+//Zend_Debug::dump($this->cacheids);
+?></p>
+</div>
+
+</div>
+</center>

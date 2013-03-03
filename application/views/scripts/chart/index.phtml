@@ -1,0 +1,80 @@
+<h1>Runners Per BHAA Event</h1>
+
+<div id="placeholder" style="width:600px;height:300px;"></div>
+
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+var d1 = [
+{
+label: "Standard",
+lines: {show: true, fill: false},
+points: {show: true, fill: false},
+data: <?php echo $this->standardDataArray; ?>
+},
+{
+label: "Pace per Km",
+yaxis: 2,
+lines: {show: true, fill: false},
+points: {show: true, fill: false},
+data: <?php echo $this->paceDataArray; ?>
+}
+];
+$.plot($("#placeholder"),
+d1,
+{
+xaxis: { ticks: <?php echo $this->eventNames; ?> , labelWidth: 5, labelHeight:50 },
+//yaxis:{
+//autoscaleMargin: 0.1,
+//timeformat: "%H:%M:%S"
+//},
+y2axis:{
+mode: "time",
+autoscaleMargin: 1,
+timeformat: "%M:%S"
+},
+selection: { mode: "xy" },
+grid: { hoverable: true, clickable: false },
+legend: {
+show: true,
+position: "ne",
+labelFormatter: function(label) {
+return '<p>' + label + '</p>';
+}
+}
+});
+
+var previousPoint = null;
+$("#placeholder").bind("plothover", function (event, pos, item) {
+$("#x").text(pos.x.toFixed(2));
+$("#y").text(pos.y.toFixed(2));
+
+if (item) {
+if (previousPoint != item.datapoint) {
+previousPoint = item.datapoint;
+
+$("#tooltip").remove();
+var x = item.datapoint[0].toFixed(2), y = item.datapoint[1].toFixed(0);
+showTooltip(item.pageX, item.pageY, "Runners : " +y);
+}
+}
+else {
+$("#tooltip").remove();
+previousPoint = null;
+}
+});
+
+function showTooltip(x, y, contents) {
+$('<div id="tooltip">' + contents + '</div>').css( {
+position: 'absolute',
+display: 'none',
+top: y + 5,
+left: x + 5,
+border: '1px solid #fdd',
+padding: '2px',
+'background-color': '#fee',
+opacity: 0.80
+}).appendTo("body").fadeIn(200);
+}
+
+});
+</script>

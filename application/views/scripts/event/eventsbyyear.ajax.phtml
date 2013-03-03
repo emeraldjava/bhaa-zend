@@ -1,0 +1,31 @@
+<div>
+<table id="races" class="tablesorter">
+<thead>
+<tr> 
+<th>Name</th>
+<th>Location</th>
+<th>Type</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->events as $event) : ?>
+<tr>
+<td>
+<?php 
+echo "<a href=";
+echo $this->url(array(
+    'controller'=>'event',
+    'action'=>'index',
+    'tag'=>$event->tag));
+echo ">$event->name</a></td>"
+?>
+<td><?php echo $this->escape($event->location);?></td>
+<td><?php echo $this->escape($event->type);?></td>
+<td><?php echo date('d/m/Y',strtotime($event->date));?></td>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</div>

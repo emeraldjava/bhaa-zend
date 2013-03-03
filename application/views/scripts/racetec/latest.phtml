@@ -1,0 +1,45 @@
+<div class="banner">
+	<div class="ui-state-highlight ui-corner-all" style="font-size:2em; margin-top: 20px; padding: 0 .7em;" align="left">
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .4em; font-size:2em"></span>
+		<strong>Total Entry-> </strong> 
+		<?php foreach($this->event as $race) : ?>
+		<span><i><?php echo $race->event.'</i>:<strong> '.$race->count.'</strong>';?></span>
+		<?php endforeach;?>
+		</p>
+	</div>
+	<div align="right">Refreshing in <span id="seconds">15</span> seconds.
+	    <script>
+	      var seconds = 15;
+	      setInterval(
+	        function(){
+	          document.getElementById('seconds').innerHTML = --seconds;
+	        }, 1000
+	      );
+	    </script>
+	</div>
+</div>
+
+<div id="raceteclatest" style="width: 100%">
+<div class="row">
+<span class="cell">Race</span>
+<span class="cell">Number</span>
+<span class="cell">ID</span>
+<span class="cell">Name</span>
+<span class="cell">Category</span>
+<span class="cell">Standard</span>
+<span class="cell">Company</span>
+<span class="cell">Team</span>
+</div>
+<?php foreach($this->racetec as $racetec) : ?>
+<div class="lrow">
+<span class="lcell"><?php echo $this->escape($racetec->event);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->racenumber);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->runner);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->firstname);?> <?php echo $this->escape($racetec->surname);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->agecat);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->standard);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->companyname);?></span>
+<span class="lcell"><?php echo $this->escape($racetec->teamname);?></span>
+</div>
+<?php endforeach;?>
+</div>

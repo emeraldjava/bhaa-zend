@@ -1,0 +1,119 @@
+<!--
+http://monzee.wordpress.com/2009/02/23/decorators-are-hard-lets-go-shopping/
+http://framework.zend.com/manual/en/zend.form.standardDecorators.html#zend.form.standardDecorators.viewScript
+
+http://www.onextrapixel.com/2009/05/13/how-to-use-dl-dt-and-dd-html-tags-to-list-data-vs-table-list-data/
+http://stackoverflow.com/questions/534870/zend-form-how-do-i-make-it-bend-to-my-will
+http://zendgeek.blogspot.com/2009/07/zend-form-decorators.html
+
+http://stackoverflow.com/questions/1277849/zend-framework-forms-decorators-and-validation-should-i-go-back-to-plain-html
+
+-->
+<form action="./preregistration" method="post">
+<table class="daymember">
+ 	<tbody>
+    	<tr>
+        	<th class="label"><?php echo $this->element->firstname->renderLabel();?></th>
+            <td class="element"><?php echo $this->element->firstname->renderElem();?></td>
+			<td class="error"><?php echo $this->element->firstname->renderErrors();?></td>
+		</tr>
+		<tr>
+			<th class="label"><?php echo $this->element->surname->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->surname->renderElem();?></td>
+			<td class="error"><?php echo $this->element->surname->renderErrors();?></td>
+		</tr>
+		<tr>
+			<th class="label"><?php echo $this->element->gender->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->gender->renderElem();?></td>
+			<td class="error"><?php echo $this->element->gender->renderErrors();?></td>
+		</tr>
+		<tr>
+			<th class="label"><?php echo $this->element->dateofbirth->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->dateofbirth->renderElem();?></td>
+            <td class="error"><?php echo $this->element->dateofbirth->renderErrors();?></td>
+		</tr>
+
+		<!--<php echo $this->element->membershipnumber->renderElem();?>-->
+
+		<!-- address -->
+		<tr>
+			<th class="label"><?php echo $this->element->address1->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->address1->renderElem();?></td>
+			<td class="error"><?php echo $this->element->address1->renderErrors();?></td>
+		</tr>
+		<tr>
+			<th class="label"><?php echo $this->element->address2->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->address2->renderElem();?></td>
+			<td class="error"><?php echo $this->element->address2->renderErrors();?></td>
+		</tr>
+		<tr>
+			<th class="label"><?php echo $this->element->address3->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->address3->renderElem();?></td>
+			<td class="error"><?php echo $this->element->address3->renderErrors();?></td>
+		</tr>
+
+		<tr>
+			<th class="label"><?php echo $this->element->email->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->email->renderElem();?></td>
+			<td class="error"><?php echo $this->element->email->renderErrors();?></td>
+        </tr>
+
+        <tr>
+			<th class="label"><?php echo $this->element->newsletter->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->newsletter->renderElem();?></td>
+			<td class="error"><?php echo $this->element->newsletter->renderErrors();?></td>
+		</tr>
+
+		<tr>
+			<th class="label"><?php echo $this->element->mobile->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->mobile->renderElem();?></td>
+			<td class="error"> <?php echo $this->element->mobile->renderErrors();?></td>
+        </tr>
+
+        <tr>
+			<th class="label"><?php echo $this->element->textmessage->renderLabel();?></th>
+			<td class="element"><?php echo $this->element->textmessage->renderElem();?></td>
+			<td class="error"> <?php echo $this->element->textmessage->renderErrors();?></td>
+		</tr>
+
+        <tr>
+            <th class="label">Company</th>
+            <td class="element" colspan="2">Enter first three letters of your company to search for existing BHAA company details, and optionally select the industrial sector that company is in.</td>
+        </tr>
+
+        <tr>
+            <th class="label"><?php echo $this->element->companyname->renderLabel();?></th>
+            <td class="element"><?php echo $this->element->companyname->renderElem();?></td>
+			<td class="error"> <?php echo $this->element->companyname->renderErrors();?></td>
+        </tr>
+        <?php echo $this->element->company->renderElem();?>
+
+        <tr>
+            <th class="label"><?php echo $this->element->sectorname->renderLabel();?></th>
+            <td class="element" colspan="2"><?php echo $this->element->sectorname->renderElem();?></td>
+        </tr>
+        <?php echo $this->element->sectorid->renderElem();?>
+
+        <tr>
+        	<th class="label">Declaration</th>
+        	<td colspan="2"><p>I understand that I enter the Business Houses Athletic Association (BHAA) events at my own risk and that neither BHAA Race Promoters, Sponsors or Associate Sponsors, volunteers and all other persons involved directly or indirectly in the organization and management of the Event will be held responsible for any accident suffered or injury sustained by myself from any cause whatsoever, or for any property lost, damaged, mislaid, stolen or damaged, on the course, from my person, from my property or at the changing areas or at any place. Furthermore, I hereby grant full permission to any of the foregoing to use photographs, films or recordings of the event for any legitimate purpose without payment of any royalty or fees to me. I agree to abide by all lawful instructions issued to me the orgnaisers, the stewards or by An Garda Siochana in the changing area or on the Course on the day.</p></td>
+        </tr>
+
+        <tr>
+        	<th class="label">Payment</th>
+        	<td colspan="2">Payment of 15euro is taken on the morning of the event at the registration area.</td>
+        </tr>
+        <tr>
+        	<th class="label">Note</th>
+        	<td colspan="2">Entrants must be at least 18 years of age on race day.</td>
+        </tr>
+
+        <?php echo $this->element->eventid->renderElem();?>
+
+        <tr>
+        	<th class="label"></th>
+        	<td colspan="3" align="center"><input type="submit" value="BHAA Day Membership Pre-register"/></td>
+        </tr>
+	</tbody>
+</table>
+</form>

@@ -1,0 +1,103 @@
+<b><?php echo $this->event->name ?></b> Race results processing 
+<div id="matchingrunners">
+<div><p>
+Rel Type
+a - match of three key fields (name,surname and dob)
+b - match of name/surname
+c - match of surname/dob
+</p></div>
+<div id="container">
+<table id="datatable" class="display">
+<thead>
+<tr>
+<th>Pos</th>
+<th>Number</th>
+<th>Day ID</th>
+<th>Surname</th>
+<th>Name</th>
+<th>DOB</th>
+<!--<th>Status</th>-->
+<th>Rel</th>
+<th>Action</th>
+<th>Member ID</th>
+<th>Surname</th>
+<th>Name</th>
+<th>DOB</th>
+<!--<th>Status</th>-->
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->runners as $result) : ?>
+<tr>
+<td><?php echo $result['position']?></td>
+<td><?php 
+echo '<a target="_blank" href="';
+echo $this->url(
+		array(
+            'controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result['id']
+		));
+echo '">'.$result['id'].'</a>'
+?></td>
+<td><?php echo $result['racenumber']?></td>
+<td><?php echo $result['surname']?></td>
+<td><?php echo $result['firstname']?></td>
+<td><?php echo $result['dateofbirth']?></td>
+<!-- <td><php echo $result['status']?></td>-->
+<td><?php echo $result['relevance']?></td>
+<td><?php 
+if($result['relevance']=="a")
+{
+	echo '<a href="';
+	echo $this->url(
+		array(
+            'controller'=>'registrar',
+			'action'=>'linkraceresult',
+			'dayid'=>$result['id'],
+   			'memberid'=>$result['rid'],
+            'race'=>$result['race'],
+            'tag'=>$this->event->tag
+		));
+	echo '">Link to Member</a>';
+}
+else if($result['relevance']=="b")
+{
+	echo '<a href="';
+	echo $this->url(
+		array(
+            'controller'=>'registrar',
+			'action'=>'linkraceresult',
+			'dayid'=>$result['id'],
+   			'memberid'=>$result['rid'],
+            'race'=>$result['race'],
+            'tag'=>$this->event->tag
+		));
+	echo '">Check DOB before Linking</a>';
+}
+else
+{
+	//echo "create new member";
+}
+?></td>
+<td><?php
+echo '<a target="_blank" href="';
+echo $this->url(
+		array(
+            'controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result['rid']
+		));
+echo '">'.$result['rid'].'</a>'
+?></td>
+<td><?php echo $result['rsurname']?></td>
+<td><?php echo $result['rfirstname'].'['.$result['rstatus'].']'?></td>
+<td><?php echo $result['rdateofbirth']?></td>
+<!-- <td><php echo $result['rstatus']?></td> -->
+</tr>
+<?php
+endforeach;
+?>
+</tbody>
+</table>
+</div>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+    <nav>
+        <member>
+          	<label>Member</label>
+        	<controller>racetec</controller>
+            <action>member</action>
+            <resource>racetec</resource>
+        </member>
+        <day>
+	       	<label>Day Runner</label>
+        	<controller>racetec</controller>
+            <action>day</action>
+            <resource>racetec</resource>
+        </day>
+        <list>
+    	    <label>List</label>
+            <controller>racetec</controller>
+            <action>list</action>
+            <resource>racetec</resource>
+        </list>
+        <latest>
+    	    <label>Latest</label>
+            <controller>racetec</controller>
+            <action>latest</action>
+            <resource>racetec</resource>
+        </latest>
+        <export>
+       	    <label>Export</label>
+            <controller>racetec</controller>
+            <action>export</action>
+            <resource>racetec</resource>
+        </export>
+<!--
+        <admin>
+       	    <label>Admin</label>
+            <controller>racetec</controller>
+            <action>admin</action>
+            <resource>racetec</resource>
+        </admin>
+
+        <login>
+        	<label>Login</label>
+        	<controller>auth</controller>
+            <action>login</action>
+         	<resource>login</resource>
+      	</login>
+      	<logout>
+        	<label>Logout</label>
+        	<controller>auth</controller>
+            <action>logout</action>
+         	<resource>logout</resource>
+      	</logout>-->
+	</nav>
+</configdata>

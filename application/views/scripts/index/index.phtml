@@ -1,0 +1,80 @@
+<div align="right">
+Search Runner : <input size="30" type="text" name="runnerquery" id="runnerquery" placeholder="full name"/>
+</div>
+
+<div align="left">
+<h2>Welcome to Business Houses Athletic Association.</h2>
+<p>The BHAA was founded in 1979 to promote inter-firm athletics and to encourage
+those who wanted to enjoy a more sociable type of sport. BHAA aims to cater for elite and not-so elite
+athletes from firms and companies!
+</p>
+</div>
+
+<div>Most Recent Event
+<div>
+<table class="tablesorter">
+<?php
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Name</th>\n";
+echo "<th>Location</th>\n";
+echo "<th>Type</th>\n";
+echo "<th>Date</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+?>
+<tbody><tr>
+<?php 
+echo '<td><a href="';
+echo $this->url(
+		array('controller'=>'event',
+			'action'=>'index',
+			'tag'=>$this->event->tag),null,true);
+echo '">'.$this->event->name.'</a></td>';
+?>
+<td><?php echo $this->escape($this->event->location);?></td>
+<td><?php echo $this->escape($this->event->type);?></td>
+<td><?php echo date('D dS M',strtotime($this->event->date));?></td>
+</tr></tbody></table>
+
+</div>
+</div>
+
+Upcoming Events
+<div id="tabs">
+	<ul>
+		<?php foreach($this->events as $event) : ?>
+	    <li><a href="#event<?php echo $this->escape($event->tag);?>"><?php echo $event->name." ".date('D dS F',strtotime($event->date));?></a></li>
+	    <?php endforeach; ?>
+	</ul>
+
+	<?php foreach($this->events as $event) : ?>
+    <div id="event<?php echo $this->escape($event->tag);?>">
+    	<p align="left">
+    	Full Details:<?php 
+    	echo '<a href="';
+		echo $this->url(
+				array('controller'=>'event',
+					'action'=>'index',
+					'tag'=>$event->tag),null,true);
+		echo '">'.$event->name.'</a>';
+		?><br/>
+	    </p>
+	</div>
+    <?php endforeach;?>
+</div>
+
+<br/>
+
+<div>
+<div>
+Featured BHAA Companies
+</div>
+<div class="slideshow"> 
+<?php
+foreach($this->logos as $logo) :
+echo '<div class="slide"><a title="'.$logo->name.'" href="./company/listrunners/company/'.$logo->id.'"><img alt="img" src="'.$logo->image.'"/></a></div>';
+endforeach;
+?>
+</div>
+</div>

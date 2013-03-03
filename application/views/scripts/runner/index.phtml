@@ -1,0 +1,343 @@
+<?php if($this->user) : ?>
+<div class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+<?php
+echo '<strong><a href="';
+echo $this->url(
+	array('controller'=>'runner',
+			'action'=>'edit',
+			'id'=>$this->runner->id));
+echo '">Edit '.$this->runner->firstname." ".$this->runner->surname." ".$this->runner->dateofbirth." ".$this->runner->status."</a></strong>";
+echo ' - ';
+echo '<strong>';
+
+echo '<strong><a href="';
+echo $this->url(
+array('controller'=>'runner',
+			'action'=>'clearcache',
+			'id'=>$this->runner->id));
+echo '">Clear Runner Cache</a></strong>';
+echo ' - ';
+echo '<strong>';
+
+//echo '<div><a href="mailto:'.$this->runner->email.'">'.$this->runner->email.'</a></div>';
+//echo '<strong><a href="';
+//echo $this->url(
+//	array('controller'=>'runner',
+//			'action'=>'gridedit',
+//			'id'=>$this->runner->id));
+//echo sprintf('/edit/1/comm/mode:edit;[runner.id:%d]">Grid Edit </a></strong>',$this->runner->id);
+
+echo " Renewal Date : ".$this->runner->dateofrenewal." :  ";
+if(date("Y",strtotime($this->runner->dateofrenewal))!=2012)
+{
+    echo '<B><a href="';
+    echo $this->url(
+        array('controller'=>'runner',
+                'action'=>'renew',
+                'id'=>$this->runner->id));
+    echo '">RENEW for 2012</a></B>';
+}
+
+echo "<hr/>";
+echo "Textalert :";
+if($this->runner->account=="")
+{
+    echo '<B><a href="';
+    echo $this->url(
+        array('controller'=>'textalert',
+                'action'=>'addtotextlist',
+                'id'=>$this->runner->id));
+    echo '">add to text list</a></B>';
+}
+else
+{
+	echo $this->runner->username;	
+}
+echo "<hr/>";
+echo '<strong>';
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'runner',
+			'action'=>'addraceorganiser',
+			'id'=>$this->runner->id,
+            'league'=>$this->league->id,
+            'event'=>$this->event->id));
+echo '">Race Organiser</a></strong>';
+echo ' - ';
+echo '<strong><a href="';
+echo $this->url(
+	array('controller'=>'runner',
+			'action'=>'addracevolunteer',
+			'id'=>$this->runner->id));
+echo '">Race Volunteer</a></strong>';
+
+echo ' - <strong><a href="';
+echo $this->url(
+	array('controller'=>'flickr',
+	      'action'=>'runnerphotos',
+	      'id'=>$this->runner->id));
+echo '">Reload Flickr</a></strong>';
+
+echo "<hr/>";
+if($this->runner->status=="D")
+{
+    if(isset($this->existing))
+    {
+        echo '<B><a href="';
+        echo $this->url(
+                array('controller'=>'runner',
+                    'action'=>'transferexisting',
+                    'id'=>$this->runner->id,
+                    'existingid'=>$this->existing->id));
+        echo '>Matches Existing Runner '.$this->existing->id."</a></B>";
+    }
+//     else
+//     {
+//         echo '<b><a href="';
+//         echo $this->url(
+//                 array('controller'=>'runner',
+//                     'action'=>'transferdetails',
+//                     'id'=>$this->runner->id));
+//         echo '">Create Full Member from Day Details.</a></b>';
+//     }
+}
+?>
+</div>
+</div>
+<?php endif; ?>
+
+<div align="left">Name         : <?php echo $this->runner->firstname?> <?php echo $this->runner->surname?></div>
+<div align="left">BHAA ID      : <?php echo $this->runner->id; ?></div>
+<div align="left">Membership   : <?php echo substr($this->runner->dateofrenewal,0,4); ?></div>
+<div align="left">Age Category : <?php echo $this->runner->agecategory; ?></div>
+<div align="left">Standard     : <?php echo $this->runner->standard; ?></div>
+
+<?php
+if( !empty( $this->runner->leagueparticipantid ) )
+{
+    echo '<div align="left">League Standing : <i>Division</i> '.$this->runner->leaguedivision.' <i>Position</i> '.$this->runner->leagueposition.'</div>';
+}
+?>
+
+<?php
+if( !empty( $this->runner->companyid ) )
+{
+	echo '<div align="left">Company ';
+    if($this->runner->companyid == $this->runner->teamid)
+        echo 'Team ';
+
+    echo ': <a href="';
+	echo $this->url(
+		array('controller'=>'houses',
+		'action'=>'company',
+		'id'=>$this->runner->companyid));
+	echo '">'.$this->runner->companyname.'</a></div>';
+}
+if(!empty($this->runner->teamid) && ($this->runner->companyid != $this->runner->teamid))
+{
+   	echo '<div align="left">Sector Team: <a href="';
+	echo $this->url(
+		array('controller'=>'houses',
+		'action'=>'team',
+		'id'=>$this->runner->teamid));
+	echo '">'.$this->runner->teamname.'</a></div>';
+}
+?>
+
+<div align="left">Total Races: <?php echo $this->runner->totalraces; ?></div>
+
+<div id="tabs">
+<ul>
+	<li><a href="#results">Results</a></li>
+	<?php
+	if($this->flickrPlugin!=null)
+		echo '<li><a href="#photos">Photos</a></li>';
+	?>
+	<?php
+	if(count($this->results)>1)
+		echo '<li><a href="#chart">Chart</a></li>';
+	?>
+</ul>
+
+<div id="results">
+<?php
+echo "<table id=\"runners\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Event</th>\n";
+echo "<th>Date</th>\n";
+echo "<th>Distance</th>\n";
+echo "<th>Number</th>\n";
+echo "<th>Position</th>\n";
+echo "<th>Time</th>\n";
+echo "<th>Pace Per Km</th>\n";
+echo "<th>Standard</th>\n";
+echo "<th>Pos in Age</th>\n";
+echo "<th>Pos in Std</th>\n";
+echo "<th>Points</th>\n";
+
+if($this->user) :
+	echo "<th>Link</th>\n";
+endif;
+
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->results as $raceresult) : ?>
+<tr>
+<?php
+echo '<td><a href="';
+echo $this->url(
+	array('controller'=>'event',
+		'action'=>'index',
+		'tag'=>$raceresult->tag));
+echo '">'.$this->escape($raceresult->name).'</a></td>';
+?>
+<td><?php echo date('d/m/Y',strtotime($this->escape($raceresult->date)));?></td>
+<td><?php echo $this->escape($raceresult->distance). ' '. $this->escape($raceresult->unit);?></td>
+
+
+
+<!-- 
+http://www.racepix.com/pages/bhaa/racelisting/<racetag>/?BibNumber=<BibNumber>
+http://www.racepix.com/org/bhaa/race/ncf5k09/bib/1968/images.aspx 
+-->
+<?php
+if(!empty($raceresult->racepixs))
+{
+echo '<td><a href="http://www.racepix.com/pages/bhaa/racelisting/';
+echo $this->escape($raceresult->racepixs);
+echo '/?BibNumber=';
+echo $this->escape($raceresult->racenumber);
+echo '" target="new">';
+echo $raceresult->racenumber;
+echo "</a></td>";
+}
+else
+{
+echo "<td>".$raceresult->racenumber."</td>";
+}
+?>
+
+<td><?php echo $this->escape($raceresult->position);?></td>
+<td><?php echo $this->escape($raceresult->racetime);?></td>
+<td><?php echo $this->escape($raceresult->paceKM);?></td>
+<td><?php echo $this->escape($raceresult->standard);?></td>
+<td><?php echo $this->escape($raceresult->positioninagecategory);?></td>
+<td><?php echo $this->escape($raceresult->positioninscoringset);?></td>
+<td><?php echo $this->escape($raceresult->points);?></td>
+
+<?php
+if($this->user)
+{
+	if($raceresult->status=="D")
+	{
+		echo '<td><a href="';
+	    echo $this->url(
+	                array('controller'=>'runner',
+	                    'action'=>'transferdetails',
+	                	'race'=>$raceresult->race,
+	                	'id'=>$this->runner->id
+			));
+	    echo '">Create Full Member & Link</a></td>';
+	}
+	else
+	{
+		echo '<td></td>';
+	}
+}
+?>
+   
+<?php echo "<!-- post race standard:". $this->escape($raceresult->postRaceStandard) . "-->"?>
+</tr>
+<?php
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</div>
+
+<?php 
+if($this->flickrPlugin!=null)
+{
+echo '<div id="photos">';
+echo $this->flickrPlugin;
+echo '</div>';
+}
+?>
+
+<?php
+if(count($this->results)>1)
+{
+?>
+<div id="chart" align="left">
+<div id="container" style="width: 750px; height: 400px; margin: 0 auto" ></div>
+<script type="text/javascript">
+var chart = new Highcharts.Chart({
+   chart: {
+      renderTo: 'container',
+      defaultSeriesType: 'line',
+      zoomType: 'xy'
+   },
+   title: {
+      text: 'Race time and Pace per KM'
+   },
+   xAxis: {
+      categories: <?php echo $this->highChartSimpleDataSeries($this->results,"tag");?>,
+      title: {
+         text: 'Race Name'
+      },
+      labels: {
+         rotation: -45,
+         align: 'right'
+      }
+   },
+   yAxis: {
+        type: 'datetime',
+        title: {
+            text: "Time"
+            }
+       }
+   ,
+   tooltip: {
+        enabled: true,
+        formatter: function() {
+            return this.series.name +':'+Highcharts.dateFormat('%M. %S', this.y);
+        }
+   },
+   legend: {
+      layout: 'vertical',
+      style: {
+         left: '120px',
+         bottom: 'auto',
+         right: 'auto',
+         top: '90px'
+      }
+   },
+   plotOptions: {
+      line: {
+         dataLabels: {
+            enabled: false
+         }
+      }
+   },
+   series: [
+   {
+      name: 'Time',
+      data: <?php echo $this->highChartSimpleDataSeries($this->results,"racetime");?>
+   },
+   {
+      name: 'Pace',
+      data: <?php echo $this->highChartSimpleDataSeries($this->results,"paceKM");?>
+   }]
+});
+</script>
+</div>
+<?php
+}
+?>
+<!--  http://highslide.com/forum/viewtopic.php?f=9&t=6183&p=29817 -->
+</div>

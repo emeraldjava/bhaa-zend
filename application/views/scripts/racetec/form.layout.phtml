@@ -1,0 +1,66 @@
+<!-- http://www.alistapart.com/articles/prettyaccessibleforms -->
+<form action="./member" method="post">
+<?php echo $this->element->type->renderElem();?>
+
+<table class="full">
+ 	<tbody>
+ 		<tr>
+			<th><?php echo $this->element->racenumber->renderLabel();?></th>
+			<td><?php echo $this->element->racenumber->renderElem();?></td>
+			<td><?php echo $this->element->racenumber->renderErrors();?></td>
+		</tr>
+		<tr>
+        	<th><?php echo $this->element->event->renderLabel();?></th>
+            <td><?php echo $this->element->event->renderElem();?></td>
+			<td><?php echo $this->element->event->renderErrors();?></td>
+		</tr>
+        <tr>
+        	<th><?php echo $this->element->firstname->renderLabel();?></th>
+            <td><?php echo $this->element->firstname->renderElem();?><?php echo $this->element->runner->renderElem();?></td>
+			<td><?php echo $this->element->firstname->renderErrors();?><?php echo $this->element->runner->renderErrors();?></td>
+		</tr>
+		<tr>
+        	<th><?php echo $this->element->surname->renderLabel();?></th>
+            <td><?php echo $this->element->surname->renderElem();?></td>
+			<td><?php echo $this->element->surname->renderErrors();?></td>
+		</tr>
+		<tr>
+        	<th><?php echo $this->element->gender->renderLabel();?></th>
+            <td><?php echo $this->element->gender->renderElem();?></td>
+			<td><?php echo $this->element->gender->renderErrors();?></td>
+		</tr>
+		<tr>
+        	<th><?php echo $this->element->dateofbirth->renderLabel();?></th>
+            <td><?php echo $this->element->dateofbirth->renderElem();?> <?php echo $this->element->agecat->renderElem();?></td>
+			<td><?php echo $this->element->dateofbirth->renderErrors();?></td>
+		</tr>
+		<tr>
+        	<th><?php echo $this->element->companyname->renderLabel();?></th>
+            <td><?php echo $this->element->companyname->renderElem();?><?php echo $this->element->companyid->renderElem();?></td>
+			<td><?php echo $this->element->companyname->renderErrors();?></td>
+		</tr>
+		<!-- optional -->
+		<?php if($this->element->type->getValue()=="member")
+		{
+		?>
+		<tr>
+        	<th><?php echo $this->element->standard->renderLabel();?></th>
+            <td><?php echo $this->element->standard->renderElem();?></td>
+			<td><?php echo $this->element->standard->renderErrors();?></td>
+		</tr>
+		<?php 
+		}
+		?>
+		<tr>
+        	<th><?php echo $this->element->teamname->renderLabel();?></th>
+            <td><?php echo $this->element->teamname->renderElem();?><?php echo $this->element->teamid->renderElem();?></td>
+			<td><?php echo $this->element->teamname->renderErrors();?></td>
+		</tr>
+        <tr>
+        	<th></th>
+        		<td align="center"><input type="submit" value="Register"/></td>
+        	<td></td>
+        </tr>        
+	</tbody>
+</table>      
+</form>

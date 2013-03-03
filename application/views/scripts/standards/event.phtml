@@ -1,0 +1,53 @@
+<center>
+<div align="left">
+<?php 
+echo "<b><a href=";
+echo $this->url(
+	array('controller'=>'standards',
+		'action'=>'admin'),null,true);
+echo ">Events</a></b>"
+?> <?php echo sprintf("%s ",$this->event->name);?>
+<b>Location</b> <?php echo sprintf("%s ",$this->event->location);?>
+<b>Date</b> <?php echo sprintf("%s ",date('d/m/Y',strtotime($this->event->date)));?>
+</div>
+<?php 
+echo "<table class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>View Standards Report</th>\n";
+echo "<th>View Charts</th>\n";
+//echo "<th>Insert Standard Data</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->races as $race) : 
+echo "<tr>";
+echo "<td><a href=";
+echo $this->url(
+	array('controller'=>'standards',
+		'action'=>'report',
+		'race'=>$race->id),null,true);
+echo ">".$this->escape($race->category)." Results</a></td>";
+
+echo "<td><a href=";
+echo $this->url(
+	array('controller'=>'standards',
+		'action'=>'graph',
+		'race'=>$race->id,
+        'tag'=>$race->tag),null,true);
+echo ">".$this->escape($race->category)." Graph</a></td>";
+//
+//echo "<td><a href=";
+//echo $this->url(
+//	array('controller'=>'standards',
+//		'action'=>'insert',
+//		'race'=>$race->id,
+//        'tag'=>$race->tag),null,true);
+//echo ">INSERT ".$this->escape($race->category)." Data</a></td>";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+</center>

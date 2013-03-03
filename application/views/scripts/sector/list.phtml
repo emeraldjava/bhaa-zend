@@ -1,0 +1,48 @@
+<center>
+
+<div align="left">
+<h2>BHAA Teams</h2>
+<p>
+The BHAA uses the concept of a sector to group companies that operate within simular business areas.
+If a member does not have a company team, and there is no chance of having enough members to make a team, the
+BHAA rules allow for the formation of a sector team. The members of these teams must work for companies in
+the same sector, and the total number of team members is 6. 
+</p>
+<p>
+If you have any questions or comments re BHAA teams please come forward and the Committee will be delighted to help you.
+</p>
+</div>
+
+<?php 
+echo "<table id=\"sectors\" class=\"tablesorter\">";
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Sector</th>\n";
+echo "<th>Sector Description</th>\n";
+echo "<th>Number of Companies</th>\n";
+echo "<th>Number of Runners</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->sectors as $sector) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'sector',
+			'action'=>'index',
+			'id'=>$sector->id
+		));
+echo ">".$this->escape($sector->name)."</a></td>";
+?>
+<td><?php echo $this->escape($sector->description);?></td>
+<td><?php echo $this->escape($sector->companies);?></td>
+<td><?php echo $this->escape($sector->runners);?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

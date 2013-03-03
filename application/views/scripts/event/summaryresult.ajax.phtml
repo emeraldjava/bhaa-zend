@@ -1,0 +1,30 @@
+<?php
+echo "<table id=\"teamresults\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Category</th>\n";
+echo "<th>Runner</th>\n";
+echo "<th>Company</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->seniormen as $result) : ?>
+<tr>
+<td><?php echo $this->escape($result->category);?></td>
+<td>
+<?php 
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->id
+		));
+echo ">".$this->escape($result->firstname)." ".$this->escape($result->surname)."</a>";?>
+</td>
+<td><?php echo $this->escape($result->company);?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>

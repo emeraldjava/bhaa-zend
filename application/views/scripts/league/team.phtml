@@ -1,0 +1,62 @@
+<div align="left">
+<?php
+echo "Back to : <a href=";
+echo $this->url(
+	array('controller'=>'league',
+			'action'=>'summary'),null,true);
+echo ">".$this->league->name."</a>";
+?>
+</div>
+
+<table id="xraces" class="tablesorter">
+<thead>
+<tr>
+<th width="50px">Name</th>
+<?php
+foreach($this->taggedraces as $race):
+echo '<th><a title="'.$race->tag.'" href="';
+echo $this->url(
+	array('controller'=>'event',
+			'action'=>'index',
+			'tag'=>$race->tag),null,true);
+echo '">'.substr($race->tag,0,3).'</a></th>';
+endforeach;
+?>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+
+<?php foreach($this->teamleague as $team) : ?>
+<tr>
+<td>
+<?php
+
+$action="company";
+if($team['type']=="S")
+    $action="team";
+
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'houses',
+		'action'=>$action,
+		'id'=>$team["id"]),null,true);
+echo '">'.$this->escape($team["name"]).'</a></th>';
+?>
+</td>
+
+<?php
+foreach($this->taggedraces as $race):
+echo "<td>";
+if($team[$race->tag]==7){ echo "<b>6R0</b>";} else { echo $team[$race->tag]; };
+echo "</td>";
+endforeach;
+?>
+
+<td><?php echo $this->escape($team["overall"]);?></td>
+</tr>
+<?php
+endforeach;
+?>
+</tbody>
+</table>

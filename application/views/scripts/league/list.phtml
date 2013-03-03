@@ -1,0 +1,85 @@
+<center>
+
+<div align="right">
+    <table id="years">
+    <tr id="year-row">
+    <?php
+    foreach($this->years as $year) :
+        echo '<td><a href="';
+        echo $this->url(array(
+            'controller'=>'league',
+            'action'=>'list',
+            'year'=>$year->year));
+        echo '">'.$year->year.'</a></td>';
+    endforeach;
+    ?>
+    </tr>
+    </table>
+</div>
+       
+
+<?php
+echo "<table id=\"races\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Name</th>\n";
+echo "<th>Type</th>\n";
+echo "<th>Start Date</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->leagues as $league) : ?>
+<tr>
+<?php
+if($league->type == "T")
+    $action = "teams";
+else
+    $action = "individuals";
+
+echo '<td><a href="';
+echo $this->url(
+		array('controller'=>'league',
+			'action'=>'summary',
+			'league'=>$league->id
+		));
+echo '">'.$league->name.'</a></td>';
+?>
+<td><?php echo $this->escape($league->type);?></td>
+<td><?php echo $this->escape($league->year);?></td>
+</tr>
+<?php
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+<div align="left">
+<ul>
+<li>The concept of the Individual League is to reward consistent high performance of the most regular
+race attendees within a given grade structure.</li>
+<li>It is hoped it will give another opportunity for athletes to compete for places even if they are not
+members of the usual winning teams.</li>
+<li>In order to qualify for the Individual League athletes must be members of the BHAA during the
+league (and in Particular by the end of the league). Eg. Members in 2006 will not score points for
+the 2006-2007 League if they are not paid up for the BHAA year of 2007.</li>
+<li>8 Leagues (6 Men and 2 Women) are made up of Members with similar running Grades.</li>
+<li>After each race all finishing members are “bucketed” into their Individual League Div (A-F, L1,L2)</li>
+<li> The best finishing person of each Division gets 10 points</li>
+<li> The second best finishing person of each Division gets 9.9 points</li>
+<li> .... and so on to the last finishing person in each “Division” in that race.</li>
+<li>All finishing members of the BHAA should get some points based on their finishing position within
+their Division.</li>
+<li>Over the course of the League each members’ total points from all (but two) races are added to
+determine the overall winner of each division.</li>
+<li>Race Promoters/Organisers will receive 10 points for their own race (as they won’t be racing
+themselves).</li>
+<li>Note: This is how the Individual League is currently compiled (Summer 2008). It takes into account
+changes from previous leagues. It is not necessarily fixed in stone. The League is for Members and
+so and if anybody has suggestions as to how it could be improved upon please contact
+<a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a> or anyone on the BHAA Committee.</li>
+<li>For Summer 2008 we have reverted to the Best of N-2 races, allowing runners miss two races,
+or two poor performances.</li>
+</ul>
+</div>
+</center>

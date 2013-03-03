@@ -1,0 +1,116 @@
+<form id="membershipform" action="./form" method="post">
+
+ <table class="full">
+ 	<tbody>
+    	<tr>
+        	<th><?php echo $this->element->firstname->renderLabel();?></th>
+            <td><?php echo $this->element->firstname->renderElem();?> <?php echo $this->element->firstname->renderErrors();?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->element->surname->renderLabel();?></th>
+			<td><?php echo $this->element->surname->renderElem();?> <?php echo $this->element->surname->renderErrors();?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->element->gender->renderLabel();?></th>
+			<td><?php echo $this->element->gender->renderElem();?> <?php echo $this->element->gender->renderErrors();?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->element->dateofbirth->renderLabel();?></th>
+			<td><?php echo $this->element->dateofbirth->renderElem();?> <?php echo $this->element->dateofbirth->renderErrors();?></td>
+            <td></td>
+		</tr>
+		<!-- address -->
+		<tr>
+			<th><?php echo $this->element->address1->renderLabel();?></th>
+			<td><?php echo $this->element->address1->renderElem();?> <?php echo $this->element->address1->renderErrors();?></td>
+			<td></td>
+		</tr>	
+		<tr>
+			<th><?php echo $this->element->address2->renderLabel();?></th>
+			<td><?php echo $this->element->address2->renderElem();?> <?php echo $this->element->address2->renderErrors();?></td>
+			<td></td>
+		</tr>
+		<tr>		
+			<th><?php echo $this->element->address3->renderLabel();?></th>
+			<td><?php echo $this->element->address3->renderElem();?> <?php echo $this->element->address3->renderErrors();?></td>
+			<td></td>
+		</tr>
+		
+		<tr>		
+			<th><?php echo $this->element->email->renderLabel();?></th>
+			<td><?php echo $this->element->email->renderElem();?> <?php echo $this->element->email->renderErrors();?></td>
+            <td></td>
+        </tr>
+        
+        <tr>
+			<th><?php echo $this->element->newsletter->renderLabel();?></th>
+			<td><?php echo $this->element->newsletter->renderElem();?> <?php echo $this->element->newsletter->renderErrors();?></td>
+            <td></td>
+		</tr>
+
+		<tr>		
+			<th><?php echo $this->element->mobile->renderLabel();?></th>
+			<td><?php echo $this->element->mobile->renderElem();?> <?php echo $this->element->mobile->renderErrors();?></td>
+            <td></td>
+        </tr>
+        
+        <tr>
+			<th><?php echo $this->element->textmessage->renderLabel();?></th>
+			<td><?php echo $this->element->textmessage->renderElem();?> <?php echo $this->element->textmessage->renderErrors();?></td>
+            <td></td>
+		</tr>
+
+        <tr>
+        	<th>Sector</th>
+            <td><?php echo $this->element->sectorid->renderElem();?><?php echo $this->element->sectorname->renderElem();?> <?php echo $this->element->sectorname->renderErrors();?></td>
+            <td></td>
+        </tr>
+        		
+		<tr>
+        	<th>Company</th>
+            <td><?php echo $this->element->companyname->renderElem();?>
+                <?php echo $this->element->company->renderElem();?>
+                <?php echo $this->element->companyname->renderErrors();?> [Enter first three letters to search for an existing BHAA company.]</td>
+            <td></td>
+        </tr>
+        
+        <tr>
+        	<th>Volunteering</th>
+            <td>
+            	<?php echo $this->element->volunteer->renderElem();?> 
+            	<?php echo $this->element->volunteer->renderErrors();?></td>
+            <td></td>
+        </tr>
+        
+        <tr>
+        	<th>BHAA</th>
+            <td><?php echo $this->element->hearabout->renderElem();?></td>
+            <td></td>
+        </tr>
+        
+        <tr>
+        	<th>Declaration</th>
+        	<td><p>I understand that I enter the Business Houses Athletic Association (BHAA) events at my own risk and that neither BHAA Race Promoters, Sponsors or Associate Sponsors, volunteers and all other persons involved directly or indirectly in the organization and management of the Event will be held responsible for any accident suffered or injury sustained by myself from any cause whatsoever, or for any property lost, damaged, mislaid, stolen or damaged, on the course, from my person, from my property or at the changing areas or at any place. Furthermore, I hereby grant full permission to any of the foregoing to use photographs, films or recordings of the event for any legitimate purpose without payment of any royalty or fees to me. I agree to abide by all lawful instructions issued to me the orgnaisers, the stewards or by An Garda Siochana in the changing area or on the Course on the day.</p></td>
+        	<td></td>
+        </tr>
+               
+        <tr>
+        	<th>Note</th>
+        	<td>Entrants must be at least 18 years of age on race day.</td>
+        	<td></td>
+        </tr>
+   		<?php echo $this->element->id->renderElem();?>
+   		<?php echo $this->element->tag->renderElem();?>
+        <tr>
+        	<th></th>
+        	<td align="center"><input type="submit" value="Submit Membership Request"/></td>
+        	<td></td>
+        </tr>
+        
+	</tbody>
+</table>
+      
+</form>

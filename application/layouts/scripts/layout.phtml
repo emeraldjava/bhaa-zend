@@ -1,0 +1,272 @@
+<?php echo $this->doctype();?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<?php echo $this->headMeta()?>
+	<?php echo $this->headTitle()?>
+	<?php echo file_get_contents('/public/js/bhaa.js') ?>
+	<?php 
+        echo $this->jQuery()
+        ->setVersion('1.5.2')
+        ->setUiVersion('1.8.12')
+        
+        // glusion css
+        //->addStylesheet('/css/style.css')
+        //->addStylesheet('/css/style-colors.css')
+        
+        // flick, cupertino, redmond
+        ->addStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/redmond/jquery-ui.css')
+
+        //->setLocalPath('/js/jquery/jquery-1.6.2.min.js')
+        //->setUiLocalPath('/js/jquery/jquery-ui-1.8.16.custom.min.js')
+        //->addStylesheet('/css/jquery/ui-lightness/jquery-ui-1.8.16.custom.css')
+
+        ->addStylesheet('/js/tablesorter/themes/blue/jq.css')
+    	->addStylesheet('/js/tablesorter/themes/blue/style.css')
+        
+        ->addStylesheet('/css/jqgrid/3.6.4/ui.jqgrid.css')
+		->addStylesheet('/js/jquery-autocomplete/jquery.autocomplete.css')
+   		//->addStylesheet('/css/highslide/highslide.css')
+
+        ->addStylesheet('/css/bhaa-yaml.css')
+        ->addStylesheet('/css/bhaa-style.css')
+
+        ->addOnLoad('$("#admin").tablesorter({sortList: [[2,1]]});')
+		->addOnLoad('$("#races").tablesorter({sortList: [[4,0]],dateFormat:"uk"});')
+		->addOnLoad('$("#racestandards").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#runnerstandards").tablesorter({sortList: [[1,0]]});')
+   		->addOnLoad('$("#racetimestandards").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#runnertimestandards").tablesorter({sortList: [[1,0]]});')
+		->addOnLoad('$("#runners").tablesorter({sortList: [[1,1]],dateFormat:"uk"});')
+		->addOnLoad('$("#raceresults:has(tbody tr)").tablesorter({sortList: [[0,0]]});')
+		//->addOnLoad('$("#eventteamresults").tablesorter({sortList: [[6,0],[1,0]]});')
+		->addOnLoad('$("#runnerresults").tablesorter({sortList: [[1,1]]});')
+		->addOnLoad('$("#division").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#standards").tablesorter({sortList: [[0,0]]});')
+        ->addOnLoad('$("#sectors").tablesorter({sortList: [[0,0]]});')
+        ->addOnLoad('$("#registrar").tablesorter();')
+        ->addOnLoad('$("#teammembers").tablesorter();')
+        ->addOnLoad('$("#teamresults:has(tbody tr)").tablesorter();')
+		->addOnLoad('$("#tabs").tabs();')
+        ->addOnLoad('$("#textmessage").counter({type:"char",goal:116});')
+		->addOnLoad('$("#dateofbirth").datepicker({
+				defaultDate: \'-30y\', 
+				dateFormat: \'dd/mm/yy\',
+                yearRange: \'1900:2000\',
+				changeYear: \'true\',
+                changeMonth: \'true\',
+                maxDate: \'-18y\' });')		
+		->addOnLoad('$(".slideshow").cycle({ fx: \'fade\', random: \'1\', timeout: \'3000\' });')
+		->addOnLoad('var options = { minChars:4, max:10 };')
+		->addOnLoad('$("#runnerquery").autocomplete(\'./index/memberfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./runner/index/id/"+data[1];
+				}
+			);')
+        ->addOnLoad('$("#registrarquery").autocomplete(\'/registrar/registrarfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+                    ref = "/runner/index/id/"+data[1];
+                    window.open(ref,"_blank");
+				}
+			);')
+		->addOnLoad('$("#teamquery").autocomplete(\'/team/teamfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./index/id/"+data[1];
+				}
+			);')
+        ->addOnLoad('$("#housequery").autocomplete(\'/houses/housename/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./houses/company/id/"+data[1];
+				}
+			);')
+		->addOnLoad('$("#companyquery").autocomplete(\'/company/companyname/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./index/id/"+data[1];
+				}
+			);')
+		// used by the membership form
+		->addOnLoad('$("#companyname").autocomplete(\'/company/companyname/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					$("#company").val(data[1]);
+				}
+			);')
+		->addOnLoad('$("input[name=\'sectorname\']").click( 
+			function() 
+			{					
+				$("#sectorid").val($(this).parent().text());
+			});')
+        ->addOnLoad('$("#select-all").click(function(event) {
+            if(this.checked) {
+                // Iterate each checkbox
+                $(":checkbox").each(function() {
+                    this.checked = true;
+                });
+            }
+            else
+            {
+                // Iterate each checkbox
+                $(":checkbox").each(function() {
+                    this.checked = false;
+                });
+            }
+        	});')
+//         ->addOnLoad('
+//             hs.graphicsDir = "/css/highslide/graphics/";
+//             hs.align = "center";
+//             hs.transitions = ["expand", "crossfade"];
+//             hs.outlineType = "rounded-white";
+//             hs.fadeInOut = true;
+
+//             // Add the controlbar
+//             hs.addSlideshow({
+//                 interval: 5000,
+//                 repeat: false,
+//                 useControls: true,
+//                 fixedControls: "fit",
+//                 overlayOptions: {
+//                     opacity: .75,
+//                     position: "bottom center",
+//                     hideOnMouseOut: true
+//                 }
+//             });
+//         ')
+        ->addOnLoad('$("#datatable").dataTable({
+			"bJQueryUI": true,
+			"bPaginate": false,
+			"bFilter": true,
+			"bAutoWidth": false,
+			"sPaginationType": "full_numbers"
+		});');
+	?>
+	<!--        <php echo file_get_contents('/js/bhaa.jquery.js');> -->
+	<?php echo $this->headScript()
+//         ->appendFile(
+//             '/js/highslide/highslide-full.min.js',
+//             'text/javascript'
+//         )
+        ->appendFile(
+	    	'/js/datatables/1.8/jquery.dataTables.min.js',
+    		'text/javascript'
+    	)
+		->appendFile(
+	    	'/js/jquery-autocomplete/jquery.autocomplete.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/js/tablesorter/jquery.tablesorter.min.js',
+    		'text/javascript'
+    	)
+    	->appendFile(
+	    	'/js/jquery-photocycle/jquery.cycle.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/js/jquery-corner/jquery.corner.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/js/jquery/counter/jquery.counter-1.0.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/js/jqgrid/3.6.4/jquery.jqGrid.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/js/jqgrid/3.6.4/grid.locale-en.js',
+    		'text/javascript'
+    	)
+    	->appendFile(
+	    	'/js/highchart-2.1.4/js/highcharts.js',
+    		'text/javascript'
+    	)
+		->appendFile(
+            'http://html5shiv.googlecode.com/svn/trunk/html5.js',
+    		'text/javascript',
+			array('conditional' => 'lt IE 9'))
+	    ->appendFile(
+            '/js/highchart-1.1.3/js/excanvas.compiled.js',
+    		'text/javascript',
+    		array('conditional' => 'IE'));
+    ?>
+    <?php echo $this->headLink(array('rel' => 'icon', 'href' => '/images/favicon.ico', 'type' => 'image/x-icon')); ?>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(["_setAccount", "UA-3869538-1"]);
+  _gaq.push(["_setDomainName", ".bhaa.ie"]);
+  _gaq.push(["_trackPageview"]);
+
+  (function() {
+    var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+    ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+    var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body style="background:#005DB3;">
+<div class="page_margins">
+    <div class="page">
+        <div id="header">
+
+            <div id="topnav">
+                <?php if($this->user) : ?>
+                <p id="logged-in">Welcome <?php echo $this->escape($this->user->name);?>.
+                <a href="<?php echo $this->baseUrl ?>/auth/logout">Logout</a></p>
+                <?php endif; ?>
+            </div>
+
+            <div>
+                <a href="http://bhaa.ie"><img src="http://bhaa.ie/images/logof4698703.png" alt="BHAA"/></a>
+            </div>
+	
+	<div id="nav">
+      <!-- skiplink anchor: navigation -->
+      <a id="navigation" name="navigation"></a>
+		<div class="hlist">
+			<?php echo $this->navigation()->menu()->setUlClass('jd_menu')->setRole(); ?>
+		</div>
+	</div>
+
+	</div>
+
+	<div id="ie_clearing">&nbsp;</div>
+	
+    <div id="main">
+      <!-- begin: #col1 - first float column -->
+      <div id="col1">
+        <div id="col1_content" class="clearfix"></div>
+      </div>
+      
+      <div id="col2">
+        <div id="col2_content" class="clearfix"></div>
+      </div>
+           
+       <div id="col3">
+        <div id="col3_content" class="clearfix">
+	        <?php echo $this->layout()->content ?> 
+        </div>
+      </div>
+    </div>
+
+    <!-- begin: #footer -->
+    <div class="vcard" id="footer">
+    	<a class="url fn org" href="http://bhaa.ie">BHAA</a> 1979-2012. If you have questions about this site please contact us by email at <span class="email"><a href="mailto:registrar@bhaa.ie">info@bhaa.ie</a></span>
+	</div>
+    <!-- end: #footer -->
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<center>
+<?php
+if($this->company->image != null)
+echo sprintf("<img src='%s'/>",$this->company->image);
+?>
+
+<div align="left">
+Team Name:
+<?php
+if($this->team->type=='C')
+{
+    echo "<a href=";
+    echo $this->url(
+    array('controller'=>'company',
+        'action'=>'listrunners',
+        'company'=>$this->team->id
+    ));
+    echo ">".$this->team->name."</a>";
+}
+else
+	echo sprintf("%s",$this->team->name);
+?>
+</div>
+
+<div align="left">
+<?php
+echo "Sector: <a href=";
+echo $this->url(
+		array('controller'=>'sector',
+			'action'=>'index',
+			'id'=>$this->sector->id
+		));
+echo ">".$this->sector->name."</a>";
+?>
+</div>
+
+<div align="left">Contact:
+<?php
+if($this->team->contact == null)
+echo sprintf("<i>We need a contact name for this team</i>");
+else
+echo sprintf("%s",$this->team->firstname.' '.$this->team->surname);
+?>
+</div>
+
+<?php if($this->user) : ?>
+<div align="left" class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+        <div>Enter the 4 digit membership number : 
+            <form action="<?php echo $this->url(array(
+                'controller'=>'team',
+                'action'=>'addteammember')); ?>" method="POST">
+                <input size="30" type="hidden" name="team" value="905"/>
+                <input size="30" type="text" name="runner"/>
+                <input type="submit" value="Add Team Member"/>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<div align="center"><b>Team Members</b></div>
+
+<table id="teammembers" class="tablesorter">
+<thead> 
+<tr>
+<th>Name</th>
+<?php
+if($this->team->type=='S')
+	echo "<th>Company</th>\n";
+?>
+<th>Gender</th>
+<th>Standard</th>
+<th>Races Ran</th>
+<th>Renewed</th>
+<?php if($this->user) : ?>
+<th>LEAVE</th>
+<th>DELETE</th>
+<?php endif; ?>
+</tr> 
+</thead>
+<tbody>
+<?php foreach($this->members as $runner) : ?>
+<?php 
+echo "<tr><td><a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$runner->id));
+echo ">".$this->escape($runner->firstname) . ' '. $this->escape($runner->surname)."</a></td>";
+
+if($this->team->type=='S')
+{
+echo "<td>";
+	if($runner->team != $runner->company)
+	{
+		echo "<a href=";
+		echo $this->url(
+            array('controller'=>'company',
+                'action'=>'listrunners',
+                'company'=>$runner->company
+            ));
+		echo ">".$runner->name.'</a>';
+	}
+	else 
+	{
+		echo "Undefined";
+	}
+echo "</td>";
+}
+?>
+<td><?php echo $this->escape($runner->gender);?></td>
+<td><?php echo $this->escape($runner->standard);?></td>
+<td><?php echo $this->escape($runner->races);?></td>
+<td><?php echo $this->escape($runner->renewed);?></td>
+<?php
+if($this->user)
+{
+echo '<td><a href="';
+echo $this->url(
+    array('controller'=>'team',
+        'action'=>'leave',
+        'runner'=>$runner->id
+    ));
+echo '">LEAVE</a></td>';
+
+echo '<td><a href="';
+echo $this->url(
+    array('controller'=>'team',
+        'action'=>'delete',
+        'runner'=>$runner->id,
+    ));
+echo '">DELETE</a></td></tr>';
+}
+else
+{
+    echo '</tr>';
+}
+?>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+
+<div align="center"><b>Team Results</b></div>
+<table id="teamresults" class="tablesorter">
+<thead>
+<tr>
+<th>Name</th>
+<th>Points Total</th>
+<th>First</th>
+<th>Second</th>
+<th>Third</th>
+<th>Standard Total</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->teamresults as $result) : ?>
+<tr>
+<td>
+<?php 
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'event',
+			'action'=>'index',
+			'tag'=>$result->tag
+		));
+echo ">".$this->escape($result->tag)."</a>";?></td>
+<td><?php echo $this->escape($result->positiontotal);?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnerfirst
+		));
+echo ">".$this->escape($result->r1sn)."</a>";?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnersecond
+		));
+echo ">".$this->escape($result->r2sn)."</a>";?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnerthird
+		));
+echo ">".$this->escape($result->r3sn)."</a>";?></td>
+<td><?php echo $this->escape($result->standardtotal);?></td>
+<td><?php echo $this->escape($result->class);?></td>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</center>

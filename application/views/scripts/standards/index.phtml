@@ -1,0 +1,61 @@
+<center>
+<div align="left">Drill down on each event to see the break down of standards and paces per event.</div>
+
+<div align="left">
+<?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'populate'),null,true);
+echo ">Populate ./limit/X:10 </a>"
+?>
+</div>
+
+<div align="left">
+Standard Reports
+<br/>
+<?php
+for($i=1;$i<=30;$i++)
+{
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'perstandardreport',
+            'standard'=>$i),null,true);
+echo ">".$i."</a>, ";
+}
+?>
+</div>
+
+<?php 
+echo "<table class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Name</th>\n";
+echo "<th>Location</th>\n";
+echo "<th>Type</th>\n";
+echo "<th>Date</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->events as $event) : ?>
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'event',
+			'tag'=>$event->tag),null,true);
+echo ">$event->name</a></td>"
+?>
+<td><?php echo $this->escape($event->location);?></td>
+<td><?php echo $this->escape($event->type);?></td>
+<td><?php echo date('d/m/Y',strtotime($this->event->date));?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+
+</center>

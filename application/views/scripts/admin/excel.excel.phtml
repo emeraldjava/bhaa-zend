@@ -1,0 +1,15 @@
+<?php
+$workbook = new Spreadsheet_Excel_Writer();
+
+$worksheet = &$workbook->addWorksheet('DayMembers Report');
+
+$indexCol = 0;
+$indexRow = 0;
+$worksheet->write($indexRow, $indexCol++, 'RaceNo');
+$worksheet->write($indexRow, $indexCol++, 'MembershipNo');
+$worksheet->write($indexRow, $indexCol++, 'Surname');
+$worksheet->write($indexRow, $indexCol++, 'Firstname');
+
+$workbook->send('report.xls');
+$workbook->close();
+?>

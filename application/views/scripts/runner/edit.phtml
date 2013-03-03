@@ -1,0 +1,19 @@
+<center>
+Edit Runner Details
+</center>
+
+<div align="left">
+<?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$this->form->id->getValue()));
+echo '">Back to runner : '.$this->form->firstname->getValue()." ".$this->form->surname->getValue()."</a>";
+?>
+</div>
+
+<div align="right">
+Search Company Name : <input size="30" type="text" name="companyname" id="companyname"/>
+</div>
+<?php echo $this->form;?>

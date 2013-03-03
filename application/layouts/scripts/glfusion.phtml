@@ -1,0 +1,232 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<?php echo $this->headTitle()?>
+	<?php
+        echo $this->jQuery()
+        ->setVersion('1.4.4')
+        ->setUiVersion('1.8.7')
+        ->addStylesheet('/public/css/style.css')
+        ->addStylesheet('/public/css/style-colors.css')
+
+        // flick, cupertino, redmond
+        ->addStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css')
+        //->setLocalPath('/public/js/jquery/1.4.2/jquery-1.4.2.min.js')
+        //->setUiLocalPath('/public/js/jquery/ui/1.8.0/jquery-ui.min.js')
+        //->addStylesheet('/public/js/jquery/ui/1.8.0/redmond/jquery-ui.css')
+
+    	->addStylesheet('/public/js/tablesorter/themes/blue/jq.css')
+        ->addStylesheet('/public/js/tablesorter/themes/blue/style.css')
+        ->addStylesheet('/public/css/jqgrid/3.6.4/ui.jqgrid.css')
+		->addStylesheet('/public/js/jquery-autocomplete/jquery.autocomplete.css')
+
+        ->addStylesheet('/public/css/bhaa.css')
+        ->addOnLoad('$("#admin").tablesorter({sortList: [[2,1]]});')
+		->addOnLoad('$("#races").tablesorter({sortList: [[4,0]],dateFormat:"uk"});')
+		->addOnLoad('$("#racestandards").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#runnerstandards").tablesorter({sortList: [[1,0]]});')
+   		->addOnLoad('$("#racetimestandards").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#runnertimestandards").tablesorter({sortList: [[1,0]]});')
+		->addOnLoad('$("#runners").tablesorter({sortList: [[1,1]],dateFormat:\'uk\'});')
+		->addOnLoad('$("#raceresults:has(tbody tr)").tablesorter({sortList: [[0,0]]});')
+		//->addOnLoad('$("#eventteamresults").tablesorter({sortList: [[6,0],[1,0]]});')
+		->addOnLoad('$("#runnerresults").tablesorter({sortList: [[1,1]]});')
+		->addOnLoad('$("#division").tablesorter({sortList: [[0,0]]});')
+		->addOnLoad('$("#standards").tablesorter({sortList: [[0,0]]});')
+        ->addOnLoad('$("#sectors").tablesorter({sortList: [[0,0]]});')
+        ->addOnLoad('$("#registrar").tablesorter();')
+        ->addOnLoad('$("#teammembers").tablesorter();')
+        ->addOnLoad('$("#teamresults:has(tbody tr)").tablesorter();')
+		->addOnLoad('$("#tabs").tabs();')
+        ->addOnLoad('$("div.inner").corner("round 8px").parent().css("padding", "4px").corner("round 10px");')
+		->addOnLoad('$("#dateofbirth").datepicker({
+				defaultDate: \'-30y\',
+				dateFormat: \'dd/mm/yy\',
+                yearRange: \'1900:2000\',
+				changeYear: \'true\',
+                changeMonth: \'true\',
+                maxDate: \'-18y\' });')
+		->addOnLoad('$(".slideshow").cycle({ fx: \'fade\', random: \'1\', timeout: \'3000\' });')
+		->addOnLoad('var options = { minChars:3, max:20 };')
+		->addOnLoad('$("#runnerquery").autocomplete(\'./index/runnerfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./runner/index/id/"+data[1];
+				}
+			);')
+         ->addOnLoad('$("#registrarquery").autocomplete(\'./registrar/registrarfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+                    ref = "./runner/index/id/"+data[1];
+                    window.open(ref,"_blank");
+				}
+			);')
+		->addOnLoad('$("#teamquery").autocomplete(\'/public/team/teamfilter/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./index/id/"+data[1];
+				}
+			);')
+		->addOnLoad('$("#companyquery").autocomplete(\'/public/company/companyname/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					window.location = "./index/id/"+data[1];
+				}
+			);')
+		// used by the membership form
+		->addOnLoad('$("#companyname").autocomplete(\'/public/company/companyname/format/html\',options)'.
+			'.result(
+				function(event, data, formatted)
+				{
+					$("#company").val(data[1]);
+				}
+			);')
+		->addOnLoad('$("input[name=\'sectorname\']").click(
+			function()
+			{
+				$("#sectorid").val($(this).parent().text());
+			});');
+	?>
+	<?php echo $this->headScript()
+		->appendFile(
+	    	'/public/js/jquery-autocomplete/jquery.autocomplete.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/public/js/tablesorter/jquery.tablesorter.min.js',
+    		'text/javascript'
+    	)
+    	->appendFile(
+	    	'/public/js/jquery-photocycle/jquery.cycle.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/public/js/jquery-corner/jquery.corner.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/public/js/jqgrid/3.6.4/jquery.jqGrid.min.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+	    	'/public/js/jqgrid/3.6.4/grid.locale-en.js',
+    		'text/javascript'
+    	)
+    	->appendFile(
+	    	'/public/js/highchart-2.1.4/js/highcharts.js',
+    		'text/javascript'
+    	)
+        ->appendFile(
+            '/public/js/highchart-1.1.3/js/excanvas.compiled.js',
+    		'text/javascript',
+    		array('conditional' => 'IE'));
+    ?>
+<!--  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAeLwjqovIwxgA0ihqe1jGLhSFrt-qNZWKYRn9RXpEKhtvewOHoRQtPjaRynyZNg-EyPt3h6MoTggvUQ&sensor=false" type="text/javascript"></script>-->
+</head>
+<body style="background:#005DB3;">
+
+<!--
+#gl_container_fixed 	Controls overall fixed width page layout.
+#gl_container_fluid 	Controls overall fluid width page layout.
+#gl_header 	Creates the site header (excluding the main menu).
+#gl_wrapper 	Creates overall site body layout.
+#gl_content 	Displays the standard left blocks, center content column, right blocks.
+#gl_content-full 	Displays only the center content column, no left or right blocks.
+#gl_content-wide-left 	Displays the left blocks and center content column.
+#gl_content-wide-right 	Displays the center content column and the right blocks.
+#gl_navigation 	Displays the left block content.
+#gl_extra 	Displays the right block content.
+    -->
+
+<div id="gl_container_fixed">
+
+
+
+<div id="gl_header">
+            <div class="top-r-corner">
+                <div class="top-l-corner">
+                    <div class="header-flag-n-search">
+						<form method="get" action="http://bhaa.ie/search.php">
+							<div>
+								<input id="header-textbox" type="text" name="query" maxlength="255" value="Search" title="Search" onfocus="if (this.value=='Search')this.value='';" onblur="if(this.value=='')this.value='Search';" />
+								<input type="hidden" name="type" value="all" />
+
+								<input type="hidden" name="mode" value="search" />
+								<input type="hidden" name="results" value="25" />
+							</div>
+						</form>
+					</div>
+										<a href="http://bhaa.ie">
+						<img src="http://bhaa.ie/images/logof4698703.png" alt="BHAA" title="BHAA" id="header-site-logo" />
+					</a>
+					<div id="header-site-slogan"></div>
+
+                </div>
+            </div>
+
+        <?php if($this->user) : ?>
+            <p id="logged-in">Welcome <?php echo $this->escape($this->user->name);?>.
+            <a href="<?php echo $this->baseUrl ?>/auth/logout">Logout</a></p>
+            <?php endif; ?>
+        <a href="http://www.facebook.com/pages/BHAA/375711882376" target="new"><img style="position:relative; top:-33px; left:875px; z-index:1000;" src="http://www.bhaa.ie/images/facebook_icon.png" alt="Follow BHAA on Facebook" title="Follow BHAA on Facebook" /></a>
+        <a href="http://twitter.com/bhaa_online" target="new"><img style="position:relative; top:-30px; left:880px; z-index:1000;" src="http://www.bhaa.ie/images/twitter_bird.png" alt="Follow BHAA on Twitter" title="Follow BHAA on Twitter" /></a>
+   </div> 		  <!-- gl_header -->
+
+   <div id="gl_moomenu1">
+<div class="gl_moomenu1">
+    <br/>
+<p>This is where the menu should be - it is a loooooonnnnnnnnggggggggggggggggline.</p>
+<br/>
+</div>
+</div>
+
+
+    <div id="gl_wrapper">
+        <div id="gl_content-wide-left">
+
+<?php echo $this->layout()->content ?>
+
+        </div>
+</div>
+
+        <div id="gl_navigation" class="gl_blockstyle1">
+            <div id="block-columnpad">
+                <div id="block-box-left">
+                    <span class="block-helpicon"></span>
+                        <h2 class="block-title-left">Runner Search</h2>
+                            <input size="18" type="text" name="runnersearch" id="runnersearch"/>
+                </div>
+                <div class="aligncenter">
+                    <div class="block-divider-left"></div>
+                </div>
+            </div>
+       </div>
+
+
+    <!-- begin: #footer -->
+    <div id="gl_footer">
+
+    <div id="footer">
+    	<a href="http://bhaa.ie">2010 BHAA</a> If you have questions about this site please contact us by email at <a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a>
+	</div>
+    </div>
+    <!-- end: #footer -->
+
+</div> <!-- end of container -->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8233331-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

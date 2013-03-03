@@ -1,0 +1,70 @@
+<center>
+<div align="left"><b>Event</b>
+<?php 
+echo "<a href=";
+echo $this->url(
+	array('controller'=>'event',
+			'action'=>'results',
+			'tag'=>$this->event->tag));
+echo ">".$this->event->name."</a> ";?>
+: <b>Team Results</b> 
+<?php echo sprintf("%s %d%s",$this->race->category,$this->race->distance,$this->race->unit);?></div>
+<?php 
+echo "<table id=\"teamresults\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Name</th>\n";
+echo "<th>Points Total</th>\n";
+echo "<th>First</th>\n";
+echo "<th>Second</th>\n";
+echo "<th>Third</th>\n";
+echo "<th>Standard Total</th>\n";
+echo "<th>Class</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->results as $result) : ?>
+<tr>
+<td>
+<?php 
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'team',
+			'action'=>'index',
+			'id'=>$result->team
+		));
+echo ">".$this->escape($result->name)."</a>";?></td>
+<td><?php echo $this->escape($result->positiontotal);?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnerfirst
+		));
+echo ">".$this->escape($result->r1sn)."</a>";?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnersecond
+		));
+echo ">".$this->escape($result->r2sn)."</a>";?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runnerthird
+		));
+echo ">".$this->escape($result->r3sn)."</a>";?></td>
+<td><?php echo $this->escape($result->standardtotal);?></td>
+<td><?php echo $this->escape($result->class);?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

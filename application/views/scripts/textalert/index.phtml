@@ -1,0 +1,54 @@
+<center>
+<div align="left">
+<p>BHAA Text Alert Admin</p>
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'textalert','action'=>'export'));
+echo '">Export ALL Text Alert Details</a>';
+?>
+</div>
+
+<table class="tablesorter">
+<thead>
+<tr> 
+<th>02 Account</th>
+<th>TextSender</th>
+<th>Linked Runners</th>
+<th>Check Remaining</th>
+<th>Export</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->mobiles as $mobile) : ?>
+<tr>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'textalert',
+			'action'=>'preparetext',
+			'account'=>$mobile->id));
+echo ">$mobile->username</a>";?></td>
+<td><?php echo $this->escape($mobile->number);?></td>
+<td><?php echo $this->escape($mobile->count);?><!-- <?php echo $this->escape($mobile->simplecount);?> --></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'textalert',
+			'action'=>'checkremaining',
+			'account'=>$mobile->id));
+echo ">$mobile->remainingtexts</a>";?></td>
+<td><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'textalert',
+			'action'=>'export',
+			'account'=>$mobile->id));
+echo ">$mobile->username</a>";?></td>
+</tr>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</center>

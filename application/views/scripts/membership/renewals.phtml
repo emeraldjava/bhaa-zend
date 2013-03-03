@@ -1,0 +1,27 @@
+Renewals
+
+<form action="/public/membership/sendrenewal" method="POST">
+	<input type="text" size="4" name="runner" id="runner"/>
+	<input type="submit" value="send renewal email"/>
+</form> 
+
+<?php 
+echo "<table>"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Runner</th>\n";
+echo "<th>Email</th>\n";
+echo "<th>Status</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->renewals as $renewal) : 
+echo "<tr>";
+echo "<td>".$this->escape($renewal->runner)."</td>";
+echo "<td>".$this->escape($renewal->email)."</td>";
+echo "<td>".$this->escape($renewal->status)."</td>";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>

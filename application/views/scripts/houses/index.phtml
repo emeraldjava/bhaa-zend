@@ -1,0 +1,68 @@
+<div align="right">
+Search by Company Name : <input size="30" type="text" name="housequery" id="housequery"/>
+</div>
+<br/>
+<div>
+Within the BHAA we organise companies and firms into sectors which reflect the
+various business areas of our members. Each company is encouraged to form their own
+team, but when there are not enough people from a single company, we allow runners
+from the same sector to form a team with up to 6 runners.
+</div>
+<br/>
+<div align="left">
+    <div class="yui-gb">
+        <div class="yui-u first">
+            <div><b><?php 
+            echo "<a href=";
+			echo $this->url(
+					array('controller'=>'houses',
+						'action'=>'list',
+						'type'=>'sector'
+					),null,true);
+			echo ">Sectors</a>";
+            ?></b></div>
+            <div>Each sector represents a general industry area, drill down to find the active companies within each sector.</div>
+        </div>
+        <div class="yui-u">
+            <div><b><?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'houses',
+			'action'=>'list',
+			'type'=>'company'
+		),null,true);
+echo ">Companies</a>";?></b></div>
+            <div>We have over 1000 registered companies with links to the BHAA, drill down to see the employee of each company.</div>
+        </div>
+        <div class="yui-u">
+            <div><b>
+<?php
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'houses',
+			'action'=>'list',
+			'type'=>'team'
+		),null,true);
+echo ">Teams</a>";?></b></div>
+            <div>Drill down to find the results of the active company and sector teams.</div>
+        </div>
+    </div>
+    <br/>
+    <div class="yui-gb">
+        <div class="yui-u first">
+            <div id="sectorcloud">
+                <?php echo $this->sectorCloud;?>
+            </div>
+        </div>
+        <div class="yui-u">
+            <div id="companycloud">
+                <?php echo $this->companyCloud;?>
+            </div>
+        </div>
+        <div class="yui-u">
+            <div id="teamcloud">
+                <?php echo $this->teamCloud;?>
+            </div>
+        </div>
+    </div>
+</div>

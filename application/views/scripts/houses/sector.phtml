@@ -1,0 +1,87 @@
+<center>
+
+<div align="left">
+<?php
+echo '<a href="';
+echo $this->url(array('controller'=>'houses','action'=>'index'),null,true);
+echo '">Houses</a>';
+?>
+    : Sector <?php echo htmlspecialchars($this->sector->name);?>
+<div><?php echo $this->sector->description;?></div>
+</div>
+
+<br/>
+<div class="yui-g">
+    <div class="yui-u first">
+        <div align="left"><b>Active companies within the <?php echo htmlspecialchars($this->sector->name);?> sector.</b></div>
+        <div>
+        <?php
+        echo "<table id=\"runners\" class=\"tablesorter\">";
+        echo "<thead>\n";
+        echo "<tr>\n";
+        echo "<th>Company</th>\n";
+        echo "<th>Number of runners</th>\n";
+        echo "</tr>\n";
+        echo "</thead>\n";
+        echo "<tbody>\n";
+        ?>
+        <?php foreach($this->companies as $company) :
+
+        if($company->runners>=1)
+        {
+            echo "<tr>\n";
+            echo '<td><a href="';
+            echo $this->url(
+                    array('controller'=>'houses',
+                        'action'=>'company',
+                        'id'=>$company->id),
+                    null,true);
+            echo '">'.$this->escape($company->name).'</a></td>';
+            echo "<td>".$this->escape($company->runners)."</td>";
+            echo "</tr>\n";
+        }
+        endforeach;
+        echo "</tbody>\n";
+        echo "</table>\n";
+        ?>
+        </div>
+        
+    </div>
+    <div class="yui-u">
+        <div align="left"><b>Summary of the sector individual league positions.</b></div>
+        <?php echo $this->individualLeagueSummaryHelper($this->indivSector); ?>
+        <div align="left"><b>Summary of the sector team league positions.</b></div>
+        <div><?php echo $this->teamLeagueSummaryHelper($this->teamSector); ?></div>
+    </div>
+</div>
+
+<!--
+Sector Teams.
+<php
+echo "<table class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Team</th>\n";
+echo "<th>Type</th>\n";
+echo "<th>Total Members</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+>
+<php foreach($this->teams as $company) :
+echo "<tr>\n";
+echo '<td><a href="';
+echo $this->url(
+        array('controller'=>'houses',
+            'action'=>'company',
+            'id'=>$company->id
+        ));
+echo '">'.$this->escape($company->name)."</a></td>";
+echo "<td>".$this->escape($company->type)."</td>";
+echo "<td>".$this->escape($company->members)."</td>";
+echo "</tr>\n";
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+>-->
+</center>

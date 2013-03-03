@@ -1,0 +1,106 @@
+<div id="runnersperstandardtable" style="width: 700px; height: 450px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart = new Highcharts.Chart({
+     chart: {
+        renderTo: 'runnersperstandardtable',
+        defaultSeriesType: 'column'
+     },
+     title: {
+        text: 'Runners per Standard'
+     },
+     xAxis: {
+        categories: [ '1','2','3','4','5','6','7','8','9','10',
+                     '11','12','13','14','15','16','17','18','19','20',
+                     '21','22','23','24','25','26','27','28','29','30' ]
+     },
+     yAxis: {
+        title: {
+           text: 'Number of Runners'
+        },
+        min: 0,
+        minorGridLineWidth: 1, 
+        gridLineWidth: 1,
+        plotBands: [{
+				from: 0.0,
+				to: 3.5,
+				color: 'rgba(68, 170, 213, 0.1)',
+				label: { text: "Scoring Set Rule", align: "right" } 
+            }]
+     },
+     legend: {
+         layout: 'vertical',
+         align: 'left',
+         verticalAlign: 'top',
+         x: 100,
+         y: 70,
+         floating: true,
+         shadow: true
+      },
+      tooltip: {
+          formatter: function() {
+             return 'Std:'+this.x +' - '+this.y+' Runners';
+          }
+       },
+      plotOptions: {
+          column: {
+             pointPadding: 0.2,
+             borderWidth: 0
+          }
+      },
+      series: [
+	  {
+    	name: 'Men',
+    	data: <?php echo $this->highChartRow($this->runners,0);?>
+	  },
+	  {
+    	name: 'Women',
+    	data: <?php echo $this->highChartRow($this->wrunners,0);?>
+	  }
+	  ]
+  });
+});
+</script>
+
+<div align="left">
+Male Runners per Standard
+<?php
+//Zend_Debug::dump($this->runners[1],"",true);
+//echo print_r($this->runners[1]);
+echo $this->rotateRowsetHelper($this->runners,0);
+?>
+</div>
+
+<div align="left">
+Male Scoringsets per Standard
+<?php
+//Zend_Debug::dump($this->runners[1],"",true);
+//echo print_r($this->runners[1]);
+echo $this->rotateRowsetHelper($this->scoringsets,0);
+?>
+</div>
+
+<div align="left">
+Women Runners per Standard
+<?php
+//Zend_Debug::dump($this->runners[1],"",true);
+//echo print_r($this->runners[1]);
+echo $this->rotateRowsetHelper($this->wrunners,0);
+?>
+</div>
+
+<div align="left">
+Women Scoringsets per Standard
+<?php
+//Zend_Debug::dump($this->runners[1],"",true);
+//echo print_r($this->runners[1]);
+echo $this->rotateRowsetHelper($this->wscoringsets,0);
+?>
+</div>
+
+<div align="left">
+Points Table
+<?php 
+echo $this->displayGenericTableHelper($this->points,0);
+?>
+</div>

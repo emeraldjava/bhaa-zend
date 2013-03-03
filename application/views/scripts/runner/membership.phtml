@@ -1,0 +1,32 @@
+<div class="main">
+
+    <!--  top row -->
+    <div class="subcolumns">
+        <div class="c70l">
+            <div class="center"><h3>BHAA Membership Form 2010</h3></div>
+        </div>
+    </div>
+
+<div>
+<p>There are now 3 ways of signing up as a member for this year.</p>
+<div>
+<ol>
+<li>Sign up online with the form below - If you use this method you can be registered before your race and entitled to team prizes the first time you run. with payment via PayPal or credit card.</li>
+<li><a href="http://bhaa.ie/documents/2010/BHAA_Membership_Form_2010.pdf">Paper Form</a> - If you use this method you can print it off and send it to us with payment via check.</li>
+<li>On the day - If you use this method it slows down results and you cannot be placed in a team till next race.</li>
+</ol>
+</div>
+<p>
+It is important to note that the online method is the quickest way to sign up and leads to less admin work for the BHAA. We are completely voluntary and no payment is made
+for time spent processing the forms or any other work done. If you have questions please contact us by email at <a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a> or at the next race.
+</p>
+<p>Runners looking to register with the Cork BHAA should see www.corkbhaa.com for details.</p>
+</div>
+
+<?php
+$form = $this->model->getBasicRunnerForm();
+$form->setMethod('post')->setAction($this->url(array('action' => 'membership')));
+echo $form;
+?>
+
+</div>

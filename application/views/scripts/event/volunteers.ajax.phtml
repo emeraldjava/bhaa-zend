@@ -1,0 +1,17 @@
+<table id="raceresults" class="tablesorter">
+<thead>
+<tr>
+<th>Name</th>
+<th>Company</th>
+</tr>
+</thead>
+<tbody>
+
+<?php foreach($this->volunteers as $result) :?>
+<tr>
+<td><?php echo $this->escape($result->firstname)." ".$this->escape($result->surname); ?></td>
+<td><?php echo $this->escape($result->name);?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>

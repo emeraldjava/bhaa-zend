@@ -1,0 +1,36 @@
+<center>
+<?php 
+echo "<table class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Name</th>\n";
+echo "<th>Code</th>\n";
+echo "<th>Gender</th>\n";
+echo "<th>Standards</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->divisions as $division) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'division',
+			'action'=>'table',
+			'id'=>$division->id,
+			'min'=>$division->min,
+			'max'=>$division->max
+		));
+echo ">$division->name</a></td>"
+?>
+<td><?php echo $this->escape($division->code);?></td>
+<td><?php echo $this->escape($division->gender);?></td>
+<td><?php echo $division->min . ' - ' . $division->max?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

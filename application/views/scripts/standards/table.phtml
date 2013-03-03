@@ -1,0 +1,109 @@
+<?php if($this->user) : ?>
+<div class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+<div align="left">
+<br/>
+<?php
+echo "<a href=";
+echo $this->url(array(
+        'controller'=>'standards',
+		'action'=>'table',
+        'type'=>'time',
+        'slopex'=>'1',
+        'kmx'=>'0'),null,true);
+echo ">2010 Standard Times </a>"
+?>
+ -
+<?php
+echo "<a href=";
+echo $this->url(array(
+        'controller'=>'standards',
+		'action'=>'table',
+        'type'=>'time',
+        'slopex'=>'1.005',
+        'kmx'=>'0.02'),null,true);
+echo ">Proposed Standard Times</a>"
+?>
+<br/>
+<?php
+echo "<a href=";
+echo $this->url(array(
+        'controller'=>'standards',
+		'action'=>'table',
+        'type'=>'pace',
+        'slopex'=>'1',
+        'kmx'=>'0'),null,true);
+echo ">2010 Standard Paces</a>"
+?>
+ -
+<?php
+echo "<a href=";
+echo $this->url(array(
+        'controller'=>'standards',
+		'action'=>'table',
+        'type'=>'pace',
+        'slopex'=>'1.051',
+        'kmx'=>'0.02'),null,true);
+echo ">Proposed Standard Pace</a>"
+?>
+</div>
+
+</div>
+</div>
+<?php endif; ?>
+
+<?php
+if(function_exists('PLG_replaceTags'))
+{
+    echo PLG_replaceTags(sprintf('[staticpage_content:%s]','standards'));
+}
+?>
+
+<div id="pacedistcontainer" style="width: 700px; height: 450px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart = new Highcharts.Chart({
+     chart: {
+        renderTo: 'pacedistcontainer',
+        defaultSeriesType: 'scatter',
+        zoomType: 'xy'
+     },
+     title: {
+        text: 'BHAA Standards : Expected Time by Distance'
+     },
+     xAxis: {
+        type: 'datetime',
+        title: {
+           text: '<?php echo $this->type; ?>'
+        },
+        min: 120000
+     },
+     yAxis: {
+        title: {
+           text: 'Standard'
+        },
+        min: 1,
+        max: 30
+     },
+     tooltip: {
+        enabled: true,
+        formatter: function() {
+            return '<strong>'+this.series.name+' Std:'+this.y+'</strong> Time:'+Highcharts.dateFormat('%Hh%Mm%Ss', this.x);
+        }
+     },
+     series: [
+     <?php
+        foreach ($this->distances as $i => $distance)
+        {
+            echo "{ name: '".$distance."',data: ".$this->highChartTimeDataSeries($this->table,$distance,'standard')." },";
+        }
+     ?>
+    ]
+  });
+});
+</script>
+
+<div align="center">
+<?php echo $this->displayGenericTableHelper($this->table, 1); ?>
+</div>

@@ -1,0 +1,141 @@
+<div align="left">
+<h2>Registrar</h2>
+Totals in the DB as of <b><?php echo $this->stats->date; ?></b><br/>
+New Members      <b><?php echo $this->stats->newmembers; ?></b><br/>
+Renewed Members  <b><?php echo $this->stats->renewedmembers;?></b><br/>
+Oct 2011 Renewed Members  <b><?php echo $this->stats->octmembers;?></b><br/>
+Active Members        <b><?php echo $this->stats->members; ?></b><br/>
+Inactive Members      <b><?php echo $this->stats->inactive; ?></b><br/>
+Day Members           <b><?php echo $this->stats->day; ?></b><br/>
+Total Members         <b><?php echo $this->stats->total; ?></b><br/>
+</div>
+
+<div align="right">
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'registrar',
+            'action'=>'eventmembers',
+            'tag'=>$this->event->tag));
+echo '">Process '.$this->event->name.' Results for Members</a>';
+?>
+</div>
+<div align="right">
+<?php
+echo '<a href="';
+echo $this->url(
+		array('controller'=>'registrar',
+            'action'=>'matchingrunners',
+            'tag'=>$this->event->tag));
+echo '">UAT : '.$this->event->name.' Matching Runners : UAT</a>';
+?>
+</div>
+<hr/>
+<div align="right">
+Surname Runner Search : <input size="30" type="text" name="registrarquery" id="registrarquery"/>
+</div>
+<hr/>
+<div align="left">
+New Membership Applications.
+<table id="registrar" class="tablesorter">
+<thead>
+<tr>
+<th>CreateNewMember</th>
+<th>Edit Member Details</th>
+<th>Edit Company</th>
+<th>dateofbirth</th>
+<th>Status</th>
+<th>RenewExistingMember</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+
+<?php foreach($this->membership as $member) : ?>
+<tr>
+<td>
+<?php
+echo '<a target="_blank" href="';
+echo $this->url(
+array('controller'=>'registrar',
+'action'=>'addnewmember',
+'id'=>$member->id,'newrunnerid'=>$member->newid));
+echo '">'.$member->newid.'</a>';
+?>
+</td>
+<td>
+<?php
+echo '<a target="_new" href="';
+echo $this->url(
+array('controller'=>'membership',
+'action'=>'edit',
+'id'=>$member->id));
+echo '">'.$this->escape($member->firstname)." ".$this->escape($member->surname)." [".$member->company."-".$this->escape($member->companyname)."]</a>";
+?>
+</td>
+<td>
+<?php
+if($member->company!=0)
+{
+    echo '<a target="_new" href="';
+    echo $this->url(
+    array('controller'=>'company',
+        'action'=>'edit',
+        'id'=>$member->company));
+    echo '">'.$member->company.' '.$this->escape($member->companyname)."</a>";
+}
+else
+{    
+    echo '<a target="_new" href="';
+    echo $this->url(
+    array('controller'=>'registrar',
+        'action'=>'linkrunnertocompany',
+        'id'=>$member->id,
+        'companyname'=>$member->companyname,
+        'company'=>$member->newcompany)
+        );
+    echo '">Create and Link Company '.$this->escape($member->companyname)."</a>";
+}
+?></td>
+<td><?php echo $this->escape($member->dateofbirth);?></td>
+<td><?php echo $this->escape($member->type);?></td>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+array('controller'=>'registrar',
+'action'=>'renewmembership',
+'member'=>$member->id,'runner'=>$member->rid));
+echo '">'.$member->rid.' '.$member->rstatus.' '.$member->rcompany."</a>";
+?>
+</td>
+<td>
+<?php
+echo '<a href="';
+echo $this->url(
+array('controller'=>'registrar',
+'action'=>'delete',
+'member'=>$member->id));
+echo '">Delete '.$member->id."</a>";
+?>
+</td>
+</tr>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</div>
+
+<hr/>
+<div align="left">
+Match Existing Runners Details : use %
+<form id="listrunners" name="listrunners" action="<?php echo $this->url(
+		array('controller'=>'registrar',
+			'action'=>'listrunners'),null,true);?>">
+Firstname <input type="text" size="10" id="firstname" name="firstname" title="firstname"/>
+Surname   <input type="text" size="10" id="surname" name="surname" title="surname"/>
+DOB <input type="text" size="10" id="dob" name="dob" title="dob"/>
+    <input type="submit" value="List Runners"/>
+</form>
+</div>

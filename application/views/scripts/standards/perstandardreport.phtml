@@ -1,0 +1,97 @@
+<div align="right">
+Standard Reports
+<br/>
+<?php
+for($i=1;$i<=30;$i++)
+{
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'perstandardreport',
+            'standard'=>$i),null,true);
+echo ">".$i."</a>, ";
+}
+?>
+</div>
+
+<div align="current">
+<b>Current Standard : <?php echo $this->standard; ?></b>
+</div>
+
+<div id="pacedistcontainer" style="width: 800px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart = new Highcharts.Chart({
+     chart: {
+        renderTo: 'pacedistcontainer',
+        defaultSeriesType: 'scatter',
+        zoomType: 'xy'
+     },
+     title: {
+        text: 'Pace and Time per Standard by Distance (Km)'
+     },
+     xAxis: {
+        type: 'datetime',
+        title: {
+           text: 'Time'
+        }
+     },
+     yAxis: {
+        title: {
+           text: 'Distance (Km)'
+        },
+        min: 0,
+        max: 15
+     },
+     tooltip: {
+        enabled: true,
+        formatter: function() {
+            return '<strong>'+ this.series.name +': </strong> Distance (Km) '+this.y +', Time '+
+                Highcharts.dateFormat('%H. %M. %S', this.x);
+        }
+     },
+     series: [
+     {
+        name: 'StdPace',
+        type: 'line',
+        data: <?php echo $this->highChartTimeDataSeries($this->standarddata,'pace','dist');?>
+     },
+     {
+        name: 'NewPace',
+        type: 'line',
+        data: <?php echo $this->highChartTimeDataSeries($this->standarddata,'newpace','dist');?>
+     },
+     {
+        name: 'Pace',
+        data: <?php echo $this->highChartTimeDataSeries($this->timepacedistanceforstandard,'paceKM','dist');?>
+     },
+//     {
+//        name: 'normalisedPaceKm',
+//        data: <php echo $this->highChartTimeDataSeries($this->timepacedistanceforstandard,'normalisedPaceKm','dist');?>
+//     },
+     {
+        name: 'StdTime',
+        type: 'line',
+        data: <?php echo $this->highChartTimeDataSeries($this->standarddata,'time','dist');?>
+     },
+     {
+        name: 'NewTime',
+        type: 'line',
+        data: <?php echo $this->highChartTimeDataSeries($this->standarddata,'newtime','dist');?>
+     },
+     {
+        name: 'RaceTime',
+        data: <?php echo $this->highChartTimeDataSeries($this->timepacedistanceforstandard,'racetime','dist');?>
+     },
+     ]
+  });
+});
+</script>
+
+<?php echo $this->displayGenericTableHelper($this->standarddata); ?>
+
+<!--
+<php echo $this->displayGenericTableHelper($this->timepacedistanceforstandard); ?>
+
+<php echo $this->displayGenericTableHelper($this->racestandarddata); ?>
+-->

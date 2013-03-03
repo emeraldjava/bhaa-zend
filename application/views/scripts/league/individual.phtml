@@ -1,0 +1,78 @@
+<div align="left">
+<?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'league',
+			'action'=>'summary'),null,true);
+echo '">'.$this->league->name.'</a> : ';
+echo $this->division->name;
+?>
+</div>
+
+<center>
+<table class="tablesorter">
+<thead>
+<tr>
+<th>P</th>
+<th>Runner</th>
+<th>Company</th>
+<?php
+foreach($this->events as $event):
+echo '<th><a title="'.$event->tag.'" href="';
+echo $this->url(
+	array('controller'=>'event',
+			'action'=>'index',
+			'tag'=>$event->tag),null,true);
+echo '">'.substr($event->tag,0,3).'</a></th>';
+endforeach;
+?>
+<th>Races</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<?php
+$pos = 1;
+foreach($this->leaguetable as $row) : ?>
+<tr>
+<?php
+echo '<td>'.$pos++.'</td>';
+echo '<td><a href="';
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$row[id]),null,true);
+echo '">'.$this->escape($row[firstname]).' '.$this->escape($row[surname]).'</a></td>';
+echo '<td><a href="';
+echo $this->url(
+		array('controller'=>'houses',
+			'action'=>'company',
+			'id'=>$row[companyid]),null,true);
+echo '">'.$this->escape($row[companyname]).'</a></td>';
+?>
+
+<?php
+foreach($this->events as $event):
+echo '<td>';
+if($row[$event->tag]==11)
+{ 
+    echo '<b>10R0</b>';
+}
+elseif($row[$event->tag].size>0)
+{
+    echo $row[$event->tag];
+    echo ' <i>['.$row[$event->tag.'_standard'].']</i>';
+};
+echo '</td>';
+endforeach;
+?>
+<td><?php echo $row[racesComplete]?></td>
+<td><?php echo $row[pointsTotal]?> <i>[<?php echo $row[standard]?>]</i></td>
+</tr>
+<?php
+endforeach;
+?>
+</tbody>
+</table>
+<div align="left">Note : RO indicates race organising runners. Values in brackets are the standard of the runner at that race.</div>
+</center>

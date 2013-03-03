@@ -1,0 +1,8 @@
+<div id="companies">
+<ol id="selectablexx">
+<?php foreach($this->companies as $letter) : ?>
+<li class="ui-state-defaultxx">
+<a href="./../../index/id/<?php echo $letter->id;?>"><?php echo $this->escape($letter->name);?></a></li>
+<?php endforeach; ?>
+</ol>
+</div>

@@ -1,0 +1,82 @@
+<div id="pacedistcontainer" style="width: 1000px; height: 450px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var chart = new Highcharts.Chart({
+     chart: {
+        renderTo: 'pacedistcontainer',
+        defaultSeriesType: 'scatter',
+        zoomType: 'xy'
+     },
+     title: {
+        text: 'BHAA 2010 Pace per Kilometer by Standard'
+     },
+     xAxis: {
+        type: 'datetime',
+        title: {
+           text: 'Pace for 1km'
+        },
+        min: 120000,
+        max: 840000
+     },
+     yAxis: {
+        title: {
+           text: 'Standard'
+        },
+        min: 0,
+        max: 31
+     },
+     tooltip: {
+        enabled: true,
+        formatter: function() {
+            return '<strong>'+ this.series.name +': </strong> Standard '+this.y +', Pace per KM '+
+                Highcharts.dateFormat('%H. %M. %S', this.x);
+        }
+     },
+     series: [
+            { name: 'stdPace',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'standard','standard');?> },
+            { name: 'Min',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'min','standard');?> },
+            { name: 'Lower',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'avg-std','standard');?> },
+            { name: 'Avg',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'avg','standard');?> },
+            { name: 'Upper',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'avg+std','standard');?> },
+            { name: 'Max',data: <?php echo $this->highChartTimeDataSeries($this->minMaxStdData,'max','standard');?> },
+     ]
+  });
+});
+</script>
+
+<div align="left">
+<pre>
+Table Legend:
+Standard - The standard.
+Sample - The number of sample records of runners with this standard.
+StdPace - The current expected pace that a runner of this standard should run. Note the max pace per KM of 5mins.
+Min - The fastest pace.
+Lower - The average minus standard deviation pace.
+Avg - The average pace.
+Upper - The average plus standard deviation pace.
+Max - The slowest pace.
+Pace*0.01 - Adding a fudge factor of 0.01. The new pace follows the current average line. Max pace is 6m30seconds.
+Pace*0.02 - Adding a fudge factor of 0.02. The new pace follows the current upper line. Max pace is 8mins.
+Pace*0.05 - Adding a fudge factor of 0.05. The new pace follows the current average line. Max pace is 12m30seconds.
+
+Select/deselect the series you want to view.
+</pre>
+</div>
+
+<?php echo $this->displayGenericTableHelper($this->minMaxStdData); ?>
+
+<div align="left">
+Drill down on each event to see the break down of standards and paces per event.
+<br/>
+<?php
+for($i=1;$i<=30;$i++)
+{
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'standards',
+			'action'=>'perstandardreport',
+            'standard'=>$i),null,true);
+echo ">".$i."</a>, ";
+}
+?>
+</div>

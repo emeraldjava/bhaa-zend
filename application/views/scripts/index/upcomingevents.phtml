@@ -1,0 +1,16 @@
+<div id="upcomingevents">
+<?php foreach($this->events as $event) : ?>
+<div id="event<?php echo $this->escape($event->tag);?>">
+<p align="left">
+<?php
+echo "<a href=";
+echo $this->url(
+        array('controller'=>'event',
+            'action'=>'index',
+            'tag'=>$event->tag));
+echo ">$event->name</a>"
+?><br/>
+</p>
+</div>
+<?php endforeach;?>
+</div>

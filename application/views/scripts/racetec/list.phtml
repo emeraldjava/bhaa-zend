@@ -1,0 +1,26 @@
+<div class="title">BHAA Registered Runners</div>
+
+<div id="raceteclist">
+<div class="row">
+<span class="cell">Event</span>
+<span class="cell">Race Number</span>
+<span class="cell">BHAA</span>
+<span class="cell">Name</span>
+<span class="cell">Category</span>
+<span class="cell">Standard</span>
+<span class="cell">Company</span>
+<span class="cell">Team</span>
+</div>
+<?php foreach($this->racetec as $racetec) : ?>
+<div class="row">
+<span class="cell"><?php echo $this->escape($racetec->event);?></span>
+<span class="cell"><?php echo $this->escape($racetec->racenumber);?></span>
+<span class="cell"><?php echo $this->escape($racetec->runner);?></span>
+<span class="cell"><?php echo $this->escape($racetec->firstname);?> <?php echo $this->escape($racetec->surname);?></span>
+<span class="cell"><?php echo $this->escape($racetec->agecat);?></span>
+<span class="cell"><?php echo $this->escape($racetec->standard);?></span>
+<span class="cell"><?php echo $this->escape($racetec->companyname);?></span>
+<span class="cell"><?php echo $this->escape($racetec->teamname);?></span>
+</div>
+<?php endforeach;?>
+</div>

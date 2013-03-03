@@ -1,0 +1,11 @@
+<div align="left">
+<?php
+echo "Back to : <a href=";
+echo $this->url(
+	array('controller'=>'registrar',
+			'action'=>'index'));
+echo ">Registrar</a>";
+?>
+</div>
+Matching Runners.
+<?php echo $this->runnerTable($this->runners); ?>

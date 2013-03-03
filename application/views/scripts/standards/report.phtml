@@ -1,0 +1,97 @@
+<div align="left">
+<?php
+echo "<b><a href=";
+echo $this->url(
+	array('controller'=>'standards',
+		'action'=>'event',
+        'tag'=>$this->event->tag),null,true);
+echo  ">Back to event : ".$this->event->name."</a>";
+?>
+</div>
+
+<h2>Race : <?php echo $this->event->name." ".$this->event->date ?> : <?php echo $this->race->type ." : ".$this->race->distance ." ".$this->race->unit ?> : Standard Times</h2>
+
+<?php
+echo $this->paginationControl($this->paginator, 'Sliding', 'standards/pagination.phtml');
+?>
+<div>
+<table id="runnertimestandards" class="tablesorter {sortlist: [[0,0]]}">
+<thead>
+<tr>
+<th>Runner</th>
+<th>Position</th>
+<th>Std</th>
+<th>Time</th>
+<th>Pre Std</th>
+<th>Post Std</th>
+<th>Diff</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+
+<?php foreach($this->paginator as $row) : ?>
+<tr>
+<td><?php 
+   
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$row->runner
+		));
+echo ">".$this->escape($row->firstname)." ".$this->escape($row->surname)." -[".$row->standard."]</a>"
+?>
+</td>
+<td><?php echo $this->escape($row->position);?></td>
+<td><?php echo $row->std; ?></td>
+<td><?php echo $this->escape($row->racetime);?></td>
+<td><?php echo $row->standard; ?></td>
+<td><?php echo $row->postRaceStandard; ?></td>
+<td><?php echo ($row->std-$row->postRaceStandard); ?></td>
+<td><?php
+$diff = $row->std-$row->postRaceStandard;
+
+$newStandard = $row->postRaceStandard;
+if($diff>0)
+    // slower
+    $newStandard++;
+else
+    // faster runner
+    $newStandard--;
+
+if( ($diff)>=3 || ($diff)<=-3 )
+{
+    echo "MUST ";
+    echo "<a href=";
+    echo $this->url(
+            array('controller'=>'standards',
+                'action'=>'setstandard',
+                'runner'=>$row->runner,
+                'race'=>$this->raceid,
+            	'page'=>$this->page,
+                'standard'=>$newStandard),false,"");
+    echo ">move to ".$newStandard."</a>";
+}
+else if( ($diff)>=2 || ($diff)<=-2 )
+{
+    echo "OPTIONAL ";
+    echo "<a href=";
+    echo $this->url(
+            array('controller'=>'standards',
+                'action'=>'setstandard',
+                'runner'=>$row->runner,
+                'race'=>$this->raceid,
+               	'page'=>$this->page,
+                'standard'=>$newStandard),false,"");
+    echo ">move to ".$newStandard."</a>";
+}
+else
+    echo "";
+?></td>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+</div>

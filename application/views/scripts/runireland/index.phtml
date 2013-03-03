@@ -1,0 +1,22 @@
+<?php echo $this->title; ?>
+<hr/>
+<?php 
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'runireland',
+		'action'=>'import',
+		'tag'=>$this->event->tag),null,true);
+echo '">Import</a>';
+?>
+|
+<?php 
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'runireland',
+		'action'=>'export',
+		'tag'=>$this->event->tag),null,true);
+echo '">Export</a>';
+?>
+<hr/>
+<?php echo $this->displayGenericTableHelper($this->runireland,0); ?>
+ 

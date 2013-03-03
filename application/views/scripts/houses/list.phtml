@@ -1,0 +1,14 @@
+<?php 
+if($this->type=='sector')
+{
+	echo $this->listSectorHelper();
+}
+else if($this->type=='team')
+{
+	echo $this->listTeamHelper();
+}
+else if($this->type=='company')
+{
+	echo $this->listCompanyHelper();
+}
+?>

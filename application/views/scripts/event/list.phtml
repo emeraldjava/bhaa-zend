@@ -1,0 +1,16 @@
+<div align="left">BHAA Results for Year <?php echo $this->year; ?></div>
+
+<div align="right">
+Previous Results by Year.<?php echo $this->eventYearComboHelper();?>
+</div>
+
+<?php
+if( ($this->year>=2009) )
+{
+    echo $this->eventsTableHelper();
+}
+else
+{
+    echo $this->eventsIFrameHelper($this->year);
+}
+?>

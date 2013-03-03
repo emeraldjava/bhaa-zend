@@ -1,0 +1,59 @@
+<div align="left">
+<?php 
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'textalert',
+			'action'=>'index'));
+echo ">Return to main mobile page</a>"
+?>
+</div>
+<!-- 
+<div align="left">Prepare BHAA Text Message</div>
+<form method="post" action="/public/textalert/sendtext">
+<textarea id="textmessage" name="message" cols="90" rows="2"></textarea>
+<input type="hidden" name="name" value="<php echo $this->mobile->name;?>"/>
+<input type="submit" value="Send Text Message"/>
+-->
+<div align="left">Runners associated with mobile account : <?php echo $this->mobile->username;?></div>
+<table id="mobiles">
+<thead>
+<tr> 
+<!-- <th><input type="checkbox" name="select-all" id="select-all"/>Check All</th>-->
+<th>Name</th>
+<th>Mobile Number</th>
+<th>BHAA ID</th>
+<th>Start Date</th>
+<th>Deactivate Text</th>
+</tr> 
+</thead>
+<tbody>
+<?php foreach($this->mobiles as $textalert) : ?>
+<tr>
+<!-- <td><input name="selectedmobiles[]" id="selectedmobiles-<php echo $mobile->mobile;?>" value="<php echo $mobile->mobile;?>" type="checkbox"/></td>-->
+<td><?php echo $this->escape($textalert->firstname)." ".$this->escape($textalert->surname);?></td>
+<td><?php echo $this->escape($textalert->mobile);?></td>
+<td><?php
+echo '<a href="';
+echo $this->url(
+	array('controller'=>'runner',
+    	'action'=>'index',
+        'id'=>$textalert->runner),null,true);
+echo '">'.$this->escape($textalert->runner).'</a>';
+?></td>
+<td><?php echo date('d-m-Y',strtotime($textalert->startdate));?></td>
+<td><?php 
+echo '<B><a href="';
+echo $this->url(
+	array('controller'=>'textalert',
+    	'action'=>'removefromtextlist',
+        'runner'=>$textalert->runner,
+		'account'=>$this->mobile->id),null,true);
+echo '">Remove from text list</a></B>';
+?></td>
+</tr>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>
+<!-- </form> -->

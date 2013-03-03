@@ -1,0 +1,8 @@
+<?php if($this->user) : 
+echo '<div id="cache" align="left"><a href="';
+echo $this->url(array('controller'=>'flickr','action'=>'clearcache'));
+echo '">Clear cached Flickr result data.</a></div>';
+endif; ?>
+<div>
+<?php echo $this->sets;?>
+</div>

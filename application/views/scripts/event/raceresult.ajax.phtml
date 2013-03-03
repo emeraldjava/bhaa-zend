@@ -1,0 +1,61 @@
+<table id="raceresults" class="tablesorter">
+<thead>
+<tr> 
+<th>Position</th>
+<th>Name</th>
+<th>Number</th>
+<th>Time</th>
+<th>Pace KM</th>
+<th>Category</th>
+<th>Standard</th>
+<th>Company</th>
+</tr>
+</thead>
+<tbody> 
+
+<?php foreach($this->results as $result) :
+echo "<tr>\n";
+echo "<td>".$this->escape($result->position)."</td>\n";
+echo "<td>\n";
+if($result->status=="M")
+{
+echo "<a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$result->runner
+		));
+echo ">".$this->escape($result->firstname) . ' '. $result->surname."</a>";
+}
+else
+{
+	echo $this->escape($result->firstname) . ' '. $this->escape($result->surname);
+}
+echo "</td>";
+?>
+<?php 
+if(!empty($result->racepixs))
+{
+echo "<td><a href=\"http://www.racepix.com/org/bhaa/race/";
+echo $this->escape($result->racepixs);
+echo "/bib/";
+echo $this->escape($result->racenumber);
+echo "/images.aspx\" target=\"new\">";
+echo $result->racenumber;
+echo "</a></td>";
+}
+else
+{
+echo "<td>".$result->racenumber."</td>";
+}
+?>
+<td><?php echo $this->escape($result->racetime);?></td>
+<td><?php echo $this->escape($result->paceKM);?></td>
+<td><?php echo $this->escape($result->category);?></td>
+<td><?php echo $this->escape($result->standard);?></td>
+<td><?php echo $this->escape($result->companyname);?></td>
+<?php 
+endforeach;
+?>
+</tbody>
+</table>

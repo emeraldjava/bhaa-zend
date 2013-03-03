@@ -1,0 +1,235 @@
+<?php
+if($this->user)
+{
+?>
+<div align="left" class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+        <div>
+		<?php
+		foreach($this->messages as $message){
+			echo '<div>'.$this->escape($message).'</div><br/>';
+		}
+
+		echo '<a href="';
+		echo $this->url(
+			array('controller'=>'event',
+				'action'=>'cleartag',
+				'tag'=>$this->event->tag
+				));
+		echo '">Clear '.count($this->cachedTags).' '.$this->event->tag.' cached results</a>    ';
+		
+		echo '    <a href="';
+		$updateResultsByEventIdCommand = sprintf('CALL updateResultsByEventId(%d)',$this->event->id);
+		echo $this->url(
+		array('controller'=>'event',
+				'action'=>'runsp',
+				'tag'=>$this->event->tag,
+				'command'=>$updateResultsByEventIdCommand),null,true);
+		echo '">Update League</a>';
+						
+		echo '<hr/>';
+		
+		echo '<a href="';
+		echo $this->url(
+		array('controller'=>'racetec',
+			'action'=>'racetecexport',
+			'tag'=>$this->event->tag,),null,true);
+		echo '">Racetec Export</a>';
+		echo '<hr/>';
+		
+		echo '<ol>';
+		foreach($this->races as $race)
+		{
+		
+			$updatePaceByRaceIdCommand = sprintf('CALL updatePaceByRaceId(%d)',$race->id);
+			$updatePositionInAgeCategoryByRaceIdCommand = sprintf('CALL updatePositionInAgeCategoryByRaceId(%d)',$race->id);
+			$updatePositionInStandardByRaceIdCommand = sprintf('CALL updatePositionInStandardByRaceId(%d)',$race->id);
+			$updatePostRaceStandardCommand = sprintf('CALL updatePostRaceStandard(%d)',$race->id);
+		
+			echo '<li>'.$race->id.' '.$race->category.' '.$race->distance.' '.$race->unit.' :: ';
+			echo '<a href="';
+			echo $this->url(
+			array('controller'=>'event',
+					'action'=>'runsp',
+					'tag'=>$this->event->tag,
+					'command'=>$updatePaceByRaceIdCommand),null,true);
+			echo '">updatePace</a> - ';
+			echo '<a href="';
+			echo $this->url(
+			array('controller'=>'event',
+					'action'=>'runsp',
+					'tag'=>$this->event->tag,
+					'command'=>$updatePositionInAgeCategoryByRaceIdCommand),null,true);
+			echo '">updatePositionInAgeCategory</a> - ';
+			echo '<a href="';
+			echo $this->url(
+			array('controller'=>'event',
+					'action'=>'runsp',
+					'tag'=>$this->event->tag,
+					'command'=>$updatePositionInStandardByRaceIdCommand),null,true);
+			echo '">updatePositionInStandard</a> - ';
+			echo '<a href="';
+			echo $this->url(
+			array('controller'=>'event',
+					'action'=>'runsp',
+					'tag'=>$this->event->tag,
+					'command'=>$updatePostRaceStandardCommand),null,true);
+			echo '">updatePostRaceStandard - </a>';
+			echo '<a href="';
+			echo $this->url(
+					array('controller'=>'event',
+							'action'=>'updatepositions',
+							'tag'=>$this->event->tag,
+							'race'=>$race->id),null,true);
+			echo '">updatePositions</a>';
+			echo '</li>';
+		}
+		echo '</ol>';
+		
+		?>
+		
+		</div>
+	</div>
+</div>
+<?php 
+}
+?>
+
+<center>
+    <div id="tabs">
+	<ul>
+		<li><a href="#details"><?php echo sprintf("%s",$this->event->name);?></a></li>
+        <!-- a tab for each race result -->
+		<?php
+        if($this->event->future == "Y")
+        {
+//            echo '<li><a href="#preregistered">';
+//            if(sizeof($this->preregistered)>0)
+//                echo sizeof($this->preregistered);
+//            echo ' Preregistered</a></li>';   
+        }
+        else
+        {
+            foreach($this->races as $race) :
+                echo '<li><a href="#race'.$race->id.'">'.$race->category.' '.$race->distance.' '.$race->unit."</a></li>\n";
+            endforeach;
+            if(isset($this->teamresults))
+                echo "<li><a href='#teams'>".sizeof($this->teamresults)." Teams</a></li>\n";
+            echo "<li><a href='#volunteerstab'>Volunteers</a></li>\n";
+        }
+
+        if($this->event->id >= 201030)
+        {
+            echo '<li><a href="#standardtable">Standards</a></li>';
+        }
+        if($this->flickrPlugin!=null)
+        {
+        	echo '<li><a href="#flickr">Photos</a></li>';
+        }
+		?>
+	</ul>
+	
+	<div id="details">
+		<div align="left">
+            <?php
+            if($this->event->id >= 201010)
+            {
+                if($this->event->future == "Y")
+                {
+                	if($this->event->runireland!="")
+                	{
+	                    echo '<div id="daymembers" align="left">';
+	                    echo '<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">';
+	                    echo '<p>Register as a <a href="';
+	                    echo $this->url(
+	                            array('controller'=>'membership',
+	                                'action'=>'form',
+	                                'tag'=>$this->event->tag));
+	                    echo '"><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span><strong>Day Member</strong></a>  for the BHAA '.$this->event->name.' event.';
+	                    echo '</div></div><br/>';
+                	}
+                }
+
+                if(function_exists('PLG_replaceTags'))
+                {
+                    echo PLG_replaceTags(sprintf('[story_introtext:%s]',$this->event->tag));
+                }
+                else
+                {
+                    echo "<b>Location : </b>".$this->escape($this->event->location)."<br/>";
+                    echo "<b>Type : </b>".$this->escape($this->event->type)."<br/>";
+                    echo "<b>Date : </b>".date('d/m/Y',strtotime($this->event->date))."<br/>";
+                    if(isset($this->contact->value))
+                    {
+                        echo "<b>Contact : </b>".$this->contact->value."<br/>";
+                    }
+                    if(isset($this->note->value))
+                    {
+//                        echo "<b>Notes : </b>".$this->note->value."<br/>";
+                    }
+                    if(isset($this->flyer->value))
+                    {
+                        echo "<div id='flyer' align='center'><img src=".$this->flyer->value." height='430' width='330'></div>";
+                    }
+                }
+            }
+			?>
+		</div>
+	</div>
+
+    <?php
+    if($this->event->future == "Y")
+    {
+         //echo $this->preregisteredResultTable();
+    }
+    else
+    {
+        foreach($this->races as $race) :
+            echo $this->raceResultTable($race->id);
+        endforeach;
+
+        echo $this->teamResultTable();
+
+        echo $this->volunteersTable();
+        
+	    if($this->flickrPlugin!=null)
+        {
+        	echo '<div id="flickr">';
+        	echo $this->flickrPlugin;
+        	echo '</div>';
+        }
+    }
+    // always display the standards
+    if($this->event->id >= 201030)
+    {
+    	echo '<div id="standardtable" align="left">';
+    	if($this->event->future == "Y")
+    	{
+	        echo '<div>The expected standard times for this event are listed below.<br/></div>';
+	        echo '<div><a href="';
+	            echo $this->url(
+	                array('controller'=>'standards',
+	                    'action'=>'index'),null,true);
+	            echo '">What are BHAA Standards</a><br/></div>';
+	        echo $this->displayGenericTableHelper($this->standards,1);
+    	}
+    	else
+    	{
+    		
+    		echo '<div>The expected standard times for this event are listed below.<br/></div>';
+	        echo '<div><a href="';
+	            echo $this->url(
+	                array('controller'=>'standards',
+	                    'action'=>'index'),null,true);
+	            echo '">What are BHAA Standards</a><br/></div>';
+	        echo $this->displayGenericTableHelper($this->standards,1);
+    		echo $this->partial('event/standardgraph.phtml',array(
+    			'men'=>$this->highChartRow($this->runners,0),
+    			'women'=>$this->highChartRow($this->wrunners,0),
+    		));
+    	}
+		echo '</div>';
+    }
+    ?>
+</div><!-- tab end -->
+</center>

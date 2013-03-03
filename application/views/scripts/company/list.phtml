@@ -1,0 +1,18 @@
+<div align="left">
+BHAA Companies by letter
+</div>
+
+<div align="right">
+Search Company Name : <input size="30" type="text" name="companyquery" id="companyquery"/>
+</div>
+
+<div id="companies">
+<ol id="selectable">
+<?php foreach($this->companies as $letter) : ?>
+<li class="ui-state-default">
+<a href="./listbyletter/letter/<?php echo $this->escape($letter->letter);?>">
+<?php echo $this->escape($letter->letter);?></a>
+</li>
+<?php endforeach; ?>
+</ol>
+</div>

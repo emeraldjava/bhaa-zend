@@ -1,0 +1,67 @@
+<div align="left">
+<?php 
+echo "<td><a href=";
+echo $this->url(
+	array('controller'=>'league',
+			'action'=>'individual',
+			'league'=>$this->league->id));
+echo ">".$this->league->name."</a> -> ";
+echo $this->division->name;
+?>
+</div>
+
+<center>
+<?php 
+echo "<table class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Pos</th>\n";
+echo "<th>Runner</th>\n";
+echo "<th>Company</th>\n";
+?>
+<?php 
+foreach($this->events as $event):
+echo "<th>".$event->tag."</th>\n";
+endforeach;
+?>
+<?php 
+echo "<th>Races</th>\n";
+echo "<th>Points</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php 
+$pos = 1;
+foreach($this->leaguetable as $row) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td>".$pos++."</td>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$row[id]
+		));
+echo ">".$this->escape($row[firstname]).' '.$this->escape($row[surname])."</a></td>";
+echo "<td>".$row[name]."</td>\n";
+?>
+
+<?php 
+foreach($this->events as $event):
+echo "<td>";
+if($row[$event->tag]==11){ echo "<b>10R0</b>";} else { echo $row[$event->tag]; };
+echo "</td>";
+endforeach;
+?>
+<td><?php echo $row[racesComplete]?></td>
+<td><?php echo $row[pointsTotal]?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>
+
+Note : RO indicates race organising runners.

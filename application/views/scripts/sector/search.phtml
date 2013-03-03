@@ -1,0 +1,39 @@
+<center>
+
+<h2>List of BHAA Sectors</h2>
+<?php echo $this->title;?>
+
+<div>Search : <?php echo $this->form ?></div>
+
+<?php 
+echo "<table id=\"runners\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Sector</th>\n";
+echo "<th>Sector Description</th>\n";
+echo "<th>Number of Companies</th>\n";
+echo "<th>Number of Runners</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->sectors as $sector) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'sector',
+			'action'=>'listcompanies',
+			'sector'=>$sector->id
+		));
+echo ">".$this->escape($sector->name)."</a></td>";
+?>
+<td><?php echo $this->escape($sector->description);?></td>
+
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

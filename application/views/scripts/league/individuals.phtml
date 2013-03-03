@@ -1,0 +1,43 @@
+<div align="left">
+<?php
+echo "Back to : <a href=";
+echo $this->url(array('controller'=>'league','action'=>'list'));
+echo ">Leagues</a>";
+?>
+</div>
+
+<center>
+<h3><?php echo $this->league->name;?></h3>
+<?php
+echo "<table id=\"division\" class=\"tablesorter\">";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Division</th>\n";
+echo "<th>Code</th>\n";
+echo "<th>Gender</th>\n";
+echo "<th>Standards</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+?>
+<?php foreach($this->divisions as $division) : ?>
+
+<?php
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'league',
+			'action'=>'individual',
+			'divisioncode'=>$division->code
+		));
+echo ">$division->name</a></td>"
+?>
+<td><?php echo $this->escape($division->code);?></td>
+<td><?php echo $this->escape($division->gender);?></td>
+<td><?php echo $division->min . ' - ' . $division->max?></td>
+<?php
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

@@ -1,0 +1,33 @@
+<center>
+Division : Standards <?php echo $this->min . ' - '. $this->max?>
+<?php 
+echo "<table id=\"races\" class=\"tablesorter\">"; 
+echo "<thead>\n"; 
+echo "<tr>\n"; 
+echo "<th>Runner</th>\n";
+echo "<th>Races</th>\n";
+echo "<th>Points</th>\n";
+echo "</tr>\n"; 
+echo "</thead>\n";
+echo "<tbody>\n"; 
+?>
+<?php foreach($this->leaguerows as $row) : ?>
+
+<?php 
+echo "<tr>\n";
+echo "<td><a href=";
+echo $this->url(
+		array('controller'=>'runner',
+			'action'=>'index',
+			'id'=>$row->id
+		));
+echo ">".$this->escape($row->firstname) . ' '. $this->escape($row->surname)."</a></td>";
+?>
+<td><?php echo $this->escape($row->racesComplete);?></td>
+<td><?php echo $row->pointsTotal?></td>
+<?php 
+endforeach;
+echo "</tbody>\n";
+echo "</table>\n";
+?>
+</center>

@@ -1,0 +1,30 @@
+<div class="main">
+
+<!--  top row -->
+<div class="subcolumns">
+	<div class="c70l">
+		<?php if($this->tag=="bhaa2012") : ?>
+    	<div class="center"><h3>BHAA Membership Form <?php echo date('Y');?></h3></div>
+    	<?php else : ?>
+        <div class="center"><h3>BHAA '<?php echo $this->event->name ?>' Day Member Registration Form</h3></div>
+        <div class="center"><p>Location: <?php echo $this->event->location?>. Date: <?php echo $this->event->date?></p></div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if($this->tag=="bhaa2012") : ?>
+<div>
+<p>
+It is important to note that the online method is the quickest way to sign up and leads to less admin work for the BHAA. We are completely voluntary and no payment is made
+for time spent processing the forms or any other work done. If you have questions please contact us by email at <a href="mailto:registrar@bhaa.ie">registrar@bhaa.ie</a> or at the next race.
+</p>
+<div class="ui-state-error ui-corner-all"> 
+<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>Cork based BHAA runners should see <a target="_new" href="http://www.corkbhaa.com">www.corkbhaa.com</a> for registration details.</p>
+</div>
+</div>
+<?php endif; ?>
+
+<?php
+echo $this->model->getForm();
+?>
+</div>

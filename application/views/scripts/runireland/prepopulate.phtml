@@ -1,0 +1,14 @@
+<?php echo $this->title; ?>
+
+<?php
+if(isset($this->runireland))
+{
+    echo '<a target="new" href="';
+    echo $this->runireland;
+    echo '">Prepopulate</a>';
+}
+?>
+
+<hr/>
+
+<?php echo $this->runireland; ?>
