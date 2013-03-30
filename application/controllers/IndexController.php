@@ -12,6 +12,15 @@ class IndexController extends Zend_Controller_Action
         $this->view->user = Zend_Auth::getInstance()->getIdentity();
     }
     
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
+    
     public function runnerfilterAction()
     {
     	if ($this->_helper->ajaxContext()->getCurrentContext()) 

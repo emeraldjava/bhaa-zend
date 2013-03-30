@@ -14,6 +14,15 @@ class RacetecController extends Zend_Controller_Action
     {
     	$this->_helper->redirector('member', 'racetec');
     }
+    
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
         
     public function memberAction() {
     	$logger = Zend_Registry::get('logger');

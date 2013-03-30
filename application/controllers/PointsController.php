@@ -11,6 +11,15 @@ class PointsController extends Zend_Controller_Action
         }
     }
     
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
+    
     public function indexAction()
     {
         $raceTable = new Model_DbTable_Race();

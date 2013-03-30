@@ -23,7 +23,7 @@ class FlickrController extends Zend_Controller_Action
         $this->logger = Zend_Registry::get('logger');
     }
 
-    function login()
+    function preDispatch()
     {
         $this->_helper->authRedirector->saveRequestUri();
         $auth = Zend_Auth::getInstance();

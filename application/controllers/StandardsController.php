@@ -10,14 +10,14 @@ class StandardsController extends Zend_Controller_Action
         ZendX_JQuery::enableView($this->view);
     }
 
-//    function preDispatch()
-//    {
-//        $this->_helper->authRedirector->saveRequestUri();
-//        $auth = Zend_Auth::getInstance();
-//        if (!$auth->hasIdentity()) {
-//            $this->_redirect('auth/login');
-//        }
-//    }
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
 
     public function indexAction()
     {

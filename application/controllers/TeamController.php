@@ -10,6 +10,15 @@ class TeamController extends Zend_Controller_Action
         $this->view->baseUrl = $this->_request->getBaseUrl();
         $this->view->user = Zend_Auth::getInstance()->getIdentity();        
     }
+    
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
         
     public function teamfilterAction()
     {

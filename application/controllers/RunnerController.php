@@ -24,6 +24,15 @@ class RunnerController extends Zend_Controller_Action
 	        ->initContext();
     }
     
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
+    
     public function runnerfilterAction()
     {
     		$runnername = $this->_request->getParam('q');

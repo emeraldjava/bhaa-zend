@@ -19,6 +19,15 @@ class SectorController extends Zend_Controller_Action
         $sectors = $table->listSectors();
         $this->view->sectors = $sectors;
     }
+    
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
         
     public function sectornameAction()
     {

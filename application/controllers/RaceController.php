@@ -18,6 +18,15 @@ class RaceController extends Zend_Controller_Action
 		$this->view->races = $race->fetchAll();
     }
 
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
+    
     public function resultsAction()
     {
         $raceid = $this->_request->getParam('race',0);

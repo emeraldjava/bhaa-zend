@@ -12,6 +12,15 @@ class LeagueController extends Zend_Controller_Action
     {
        	$this->_helper->redirector('list', 'league');
     }
+    
+    function preDispatch()
+    {
+    	$this->_helper->authRedirector->saveRequestUri();
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) {
+    		$this->_redirect('auth/login');
+    	}
+    }
 
     /**
      * List all leagues
